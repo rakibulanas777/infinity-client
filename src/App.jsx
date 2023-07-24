@@ -10,6 +10,7 @@ import Register from "./pages/Register";
 import Navbar from "./component/Navbar";
 import Addproducts from "./pages/Seller/Addproducts";
 import Myproducts from "./pages/Seller/Myproducts";
+import Footer from "./component/Footer";
 
 function App() {
   return (
@@ -58,6 +59,7 @@ function App() {
           }
         />
       </Routes>
+      <Footer />
     </>
   );
 }

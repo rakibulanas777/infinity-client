@@ -4,9 +4,9 @@ const ProductContext = createContext();
 
 const ProductProvider = ({ children }) => {
   const [product, setProduct] = useState(null);
-  console.log(user);
+
   return (
-    <ProductContext.Provider value={{ user, setUser }}>
+    <ProductContext.Provider value={{ product, setProduct }}>
       {children}
     </ProductContext.Provider>
   );
@@ -14,4 +14,4 @@ const ProductProvider = ({ children }) => {
 const useProductContext = () => {
   return useContext(ProductContext);
 };
-export { UserProvider, useProductContext };
+export { ProductProvider, useProductContext };
