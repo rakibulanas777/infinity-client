@@ -11,6 +11,7 @@ import Navbar from "./component/Navbar";
 import Addproducts from "./pages/Seller/Addproducts";
 import Myproducts from "./pages/Seller/Myproducts";
 import Footer from "./component/Footer";
+import Editproducts from "./pages/Seller/Editproducts";
 
 function App() {
   return (
@@ -47,6 +48,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Addproducts />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/editproduct"
+          element={
+            <ProtectedRoute>
+              <Editproducts />
             </ProtectedRoute>
           }
         />

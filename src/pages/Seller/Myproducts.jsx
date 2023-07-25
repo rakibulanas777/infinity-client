@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useUserContext } from "../../context/userContext";
 import axios from "axios";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
+import { message } from "antd";
+import { useProductContext } from "../../context/productContext";
 const Myproducts = () => {
   const [myProduct, setmyProduct] = useState([]);
   const { user } = useUserContext();
@@ -32,8 +34,9 @@ const Myproducts = () => {
   };
   useEffect(() => {
     getProducts();
-  }, [myProduct]);
+  }, []);
   console.log(myProduct);
+
   return (
     <div>
       <Wrapper>
@@ -55,7 +58,27 @@ export default Myproducts;
 
 const Product = ({ curElem }) => {
   console.log(curElem);
-
+  const { getProductDetails } = useProductContext();
+  const handleDelete = (id) => {
+    alert("are you sure procesd");
+    fetch(`http://localhost:8000/api/v1/product/${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json()) // or res.json()
+      .then((data) => {
+        message.error(data.message);
+        location.reload();
+      });
+  };
+ const navigate = useNavigate();
+  const handleEdit = (id) => {
+    fetch(`http://localhost:8000/api/v1/product/${id}`)
+      .then((res) => res.json()) // or res.json()
+      .then((data) => {
+        getProductDetails(data.data.product);
+        navigate("/editproduct");
+      });
+  };
   return (
     <div className="card h-full bg-white w-full shadow-sm rounded-md bg-clip-padding backdrop-filter backdrop-blur-lg  border p-3">
       {/* <div className="flex space-x-2 cursor-pointer items-center mb-3">
@@ -88,12 +111,12 @@ const Product = ({ curElem }) => {
                 <BsThreeDotsVertical className="absolute text-xl font-medium top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 " />
               </div>
             </summary>
-            <ul className="p-2 shadow menu dropdown-content z-[1] bg-white rounded-box w-52">
+            <ul className="p-2 shadow menu dropdown-content z-10 bg-white rounded-box w-52">
               <li>
-                <a>edit</a>
+                <a onClick={() => handleEdit(curElem._id)}>edit</a>
               </li>
               <li>
-                <a>delete</a>
+                <a onClick={() => handleDelete(curElem._id)}>delete</a>
               </li>
             </ul>
           </details>
