@@ -65,7 +65,7 @@ const Product = ({ curElem }) => {
         <div className="text-xl font-semibold text-blue-900">@{user.name}</div>
       </div> */}
       <div className="relative">
-        <Link href={`/feature/`}>
+        <Link to={`/${curElem._id}`}>
           <figure>
             <img src={curElem.image} alt={curElem.title} />
           </figure>

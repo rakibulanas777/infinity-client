@@ -70,7 +70,7 @@ const Product = ({ curElem }) => {
         location.reload();
       });
   };
- const navigate = useNavigate();
+  const navigate = useNavigate();
   const handleEdit = (id) => {
     fetch(`http://localhost:8000/api/v1/product/${id}`)
       .then((res) => res.json()) // or res.json()
@@ -99,7 +99,7 @@ const Product = ({ curElem }) => {
         <div className="text-xl font-semibold text-blue-900">@{user.name}</div>
       </div> */}
       <div className="relative">
-        <Link href={`/feature/`}>
+        <Link to={`/${curElem._id}`}>
           <figure>
             <img src={curElem.image} alt={curElem.title} />
           </figure>

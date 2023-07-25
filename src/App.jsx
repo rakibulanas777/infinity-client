@@ -12,6 +12,7 @@ import Addproducts from "./pages/Seller/Addproducts";
 import Myproducts from "./pages/Seller/Myproducts";
 import Footer from "./component/Footer";
 import Editproducts from "./pages/Seller/Editproducts";
+import ProductDetails from "./pages/ProductDetails";
 
 function App() {
   return (
@@ -56,6 +57,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Editproducts />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/:id"
+          element={
+            <ProtectedRoute>
+              <ProductDetails />
             </ProtectedRoute>
           }
         />
