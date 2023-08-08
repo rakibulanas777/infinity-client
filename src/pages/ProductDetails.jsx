@@ -40,12 +40,11 @@ const ProductDetails = () => {
       e.preventDefault();
 
       const res = await axios.post(
-        "http://localhost:8000/api/v1/bids",
+        `http://localhost:8000/api/v1/bids/${params.id}`,
         {
 
-          userId: user._id,
+          userId: user.user._id,
           amount: e.target.amount.value,
-          product: params.id
         },
         {
           headers: {

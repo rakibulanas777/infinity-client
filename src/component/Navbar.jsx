@@ -25,6 +25,7 @@ const Navbar = () => {
   };
 
   const { user, setUser } = useUserContext();
+  console.log(user.user._id)
   const navigate = useNavigate();
   const navItem = [
     {
@@ -84,27 +85,44 @@ const Navbar = () => {
   ];
   const onChange = async (checked) => {
     console.log(`switch to ${checked}`);
-    try {
-      const res = await axios.post(
-        "http://localhost:8000/api/v1/user/apply-seller",
-        {
-          userId: user._id,
-          checked,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
 
-      if (res.data.success) {
-        message.success(res.data.message);
-        setUser(res.data.data);
-        navigate("/");
+    try {
+      if (checked) {
+        const res = await axios.put(
+          `http://localhost:8000/api/v1/user/switch-to-user/${user?.user._id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        if (res.data.success) {
+          message.success(res.data.message);
+          setUser(res.data.data);
+          navigate("/");
+        } else {
+          message.error(res.data.message);
+        }
       } else {
-        message.error(res.data.message);
+        const res = await axios.put(
+          `http://localhost:8000/api/v1/user/switch-to-vendor/${user?.user._id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        if (res.data.success) {
+          message.success(res.data.message);
+          setUser(res.data.data);
+          navigate("/");
+        } else {
+          message.error(res.data.message);
+        }
       }
+
+
+
     } catch (error) {
       console.log(error);
       message.error("Somthing Went Wrrong ");
@@ -187,7 +205,7 @@ const Navbar = () => {
                     tabIndex={0}
                     className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-white rounded-box w-52"
                   >
-                    {user.user.isSeller ? (
+                    {user.user.role === 'vendor' ? (
                       <>
                         {navItemSeller.map((item) => (
                           <li>
@@ -207,7 +225,7 @@ const Navbar = () => {
                         ))}
                         <li className="flex gap-5 flex-row items-center">
                           <a className="cursor-pointer duration-1000 ease-out text-sm lg:text-base xl:text-base font-medium text-neutral hover:text-primary">
-                            Switch buyer
+                            Switch Vendor
                           </a>
                           <Switch
                             onChange={onChange}
