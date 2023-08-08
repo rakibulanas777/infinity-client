@@ -22,7 +22,7 @@ const Home = () => {
   useEffect(() => {
     getProducts();
   }, []);
-  console.log(product);
+
   return (
     <div>
       <Wrapper>
@@ -79,7 +79,7 @@ const Product = ({ curElem }) => {
       <div className="card-data">
         <div className="flex items-center text-black justify-between mt-3">
           <div className="font-medium">Timberland</div>
-          <div className="font-medium">{curElem.bids.length} bids</div>
+          <div className="font-medium">{curElem.bidCount}bids</div>
         </div>
         <div className="flex items-center text-black justify-between">
           <div className="">0 Gebote</div>

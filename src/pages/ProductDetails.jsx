@@ -1,18 +1,68 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PageNavigation from "../component/PageNavigation";
 import { useProductContext } from "../context/productContext";
 import { useParams } from "react-router-dom";
 import { AiFillClockCircle, AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
+import { message } from "antd";
+import { useUserContext } from "../context/userContext";
+import axios from "axios";
 
 const ProductDetails = () => {
-  const { getProductDetails, productDetails } = useProductContext();
+  const [productDetails, setProductDetails] = useState(null);
+  const { user, setUser } = useUserContext();
   const params = useParams();
-  console.log(params.id);
-  fetch(`http://localhost:8000/api/v1/product/${params.id}`)
-    .then((res) => res.json()) // or res.json()
-    .then((data) => {
-      getProductDetails(data.data.product);
-    });
+  // fetch()
+  //   .then((res) => res.json()) // or res.json()
+  //   .then((data) => {
+  //     setProductDetails(data.data.product);
+  //   });
+
+
+  const getProductsDetails = async () => {
+    try {
+      const res = await axios.get(`http://localhost:8000/api/v1/product/${params.id}`);
+
+      if (res.data.success) {
+        setProductDetails(res.data.data.product);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getProductsDetails();
+  }, []);
+
+
+  const handleOnBids = async (e) => {
+    try {
+      console.log(e.target.amount.value)
+      e.preventDefault();
+
+      const res = await axios.post(
+        "http://localhost:8000/api/v1/bids",
+        {
+
+          userId: user._id,
+          amount: e.target.amount.value,
+          product: params.id
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      message.success(res.data.message);
+
+    } catch (error) {
+
+      console.log(error);
+    }
+  };
+
+
 
   return (
     <div>
@@ -87,15 +137,26 @@ const ProductDetails = () => {
               <p className="text-sm mb-2">starting bid</p>
               {/* <p className="font-semibold  mb-2">${price}</p> */}
 
-              <form className="border-b-2 border-gray-100 pb-4">
-                <label
+              <form className="border-b-2 border-gray-100 pb-4" onSubmit={handleOnBids}>
+                {/* <label
                   htmlFor="offer"
                   type="button"
                   className="py-2 text-center cursor-pointer px-4 mt-4 rounded bg-red-500 text-white font-medium !w-full"
                 >
                   offer
-                </label>
-                <input type="checkbox" id="offer" className="modal-toggle" />
+                </label> */}
+                <input
+                  type="text"
+                  name="amount"
+                  className="input input-bordered bg-transparent w-full"
+                />
+                <button
+                  type="submit"
+                  className="py-2 text-center cursor-pointer px-4 mt-4 rounded bg-red-500 text-white font-medium !w-full"
+                >
+                  offer
+                </button>
+                {/* <input type="checkbox" id="offer" className="modal-toggle" />
                 <div className="modal">
                   <div className="modal-box relative bg-white w-96 shadow">
                     <label
@@ -122,11 +183,7 @@ const ProductDetails = () => {
                       <div className="shadow-sm text-white bg-red-500 hover:bg-red-700  cursor-pointer p-5  rounded-full  relative">
                         <AiOutlineMinus className="absolute text-xl font-medium top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 " />
                       </div>
-                      <input
-                        type="text"
-                        name="price"
-                        className="input input-bordered w-full"
-                      />
+                     
                       <div className="shadow-sm text-white bg-red-500 hover:bg-red-700  cursor-pointer p-5  rounded-full  relative">
                         <AiOutlinePlus className="absolute text-xl font-medium top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 " />
                       </div>
@@ -157,18 +214,14 @@ const ProductDetails = () => {
                         />
                       </label>
                     </div>
-                    <button
-                      type="submit"
-                      className="py-2 text-center cursor-pointer px-4 mt-4 rounded bg-red-500 text-white font-medium !w-full"
-                    >
-                      offer
-                    </button>
+                   
                   </div>
-                </div>
-                <button className="py-2 px-4 mt-4 rounded border border-red-500 font-medium w-full">
-                  favorite
-                </button>
+                </div> */}
               </form>
+              <button className="py-2 px-4 mt-4 rounded border border-red-500 font-medium w-full">
+                favorite
+              </button>
+
               <div className="pb-3">
                 <div className="text-sm">Delivery</div>
                 <div className="text-md">B Mail package , CHF 8.50</div>
