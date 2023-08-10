@@ -5,9 +5,11 @@ import Products from "../component/Product";
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
 import { AiOutlinePlus } from "react-icons/ai";
+import io from 'socket.io-client';
 const Home = () => {
-  const [product, setProduct] = useState(null);
+  // const [product, setProduct] = useState(null);
   //get user
+  const { product, setProduct } = useProductContext();
   const getProducts = async () => {
     try {
       const res = await axios.get("http://localhost:8000/api/v1/product");
@@ -79,7 +81,9 @@ const Product = ({ curElem }) => {
       <div className="card-data">
         <div className="flex items-center text-black justify-between mt-3">
           <div className="font-medium">Timberland</div>
-          <div className="font-medium">{curElem.bidCount}bids</div>
+          <Link to={`/allbids/${curElem._id}`}>
+            <div className="font-medium">{curElem.bidCount} bids</div>
+          </Link>
         </div>
         <div className="flex items-center text-black justify-between">
           <div className="">0 Gebote</div>

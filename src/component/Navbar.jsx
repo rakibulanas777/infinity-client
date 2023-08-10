@@ -25,7 +25,7 @@ const Navbar = () => {
   };
 
   const { user, setUser } = useUserContext();
-  console.log(user.user._id)
+  console.log(user?.user._id)
   const navigate = useNavigate();
   const navItem = [
     {
@@ -197,7 +197,7 @@ const Navbar = () => {
                   >
                     <div className="w-10 rounded-full bg-blue-500 relative">
                       <div className="text-xl font-semibold absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white">
-                        {user.user.name.charAt(0)}
+                        {user?.user.name.charAt(0)}
                       </div>
                     </div>
                   </label>
@@ -205,7 +205,7 @@ const Navbar = () => {
                     tabIndex={0}
                     className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-white rounded-box w-52"
                   >
-                    {user.user.role === 'vendor' ? (
+                    {user?.user.role === 'vendor' ? (
                       <>
                         {navItemSeller.map((item) => (
                           <li>

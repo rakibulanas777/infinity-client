@@ -42,7 +42,7 @@ const ProductDetails = () => {
       const res = await axios.post(
         `http://localhost:8000/api/v1/bids/${params.id}`,
         {
-
+          vendor: productDetails.userId,
           userId: user.user._id,
           amount: e.target.amount.value,
         },
