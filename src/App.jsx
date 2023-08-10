@@ -14,6 +14,7 @@ import Footer from "./component/Footer";
 import Editproducts from "./pages/Seller/Editproducts";
 import ProductDetails from "./pages/ProductDetails";
 import AllBids from "./pages/Seller/AllBids";
+import CompleteProfile from "./pages/CompleteProfile";
 
 function App() {
   return (
@@ -50,6 +51,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Addproducts />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/complete-profile"
+          element={
+            <ProtectedRoute>
+              <CompleteProfile />
             </ProtectedRoute>
           }
         />

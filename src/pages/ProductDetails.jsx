@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import PageNavigation from "../component/PageNavigation";
 import { useProductContext } from "../context/productContext";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { AiFillClockCircle, AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { message } from "antd";
 import { useUserContext } from "../context/userContext";
 import axios from "axios";
+import CountdownTimer from "./Seller/CountdownTimer";
 
 const ProductDetails = () => {
   const [productDetails, setProductDetails] = useState(null);
@@ -36,13 +37,16 @@ const ProductDetails = () => {
 
   const handleOnBids = async (e) => {
     try {
-      console.log(e.target.amount.value)
-      e.preventDefault();
 
+      e.preventDefault();
+      if (!user.user.bankAccount) {
+        message.error('Please provide your bank account information.');
+        return <Navigate to="/complete-profile" />;;
+      }
       const res = await axios.post(
         `http://localhost:8000/api/v1/bids/${params.id}`,
         {
-          vendor: productDetails.userId,
+          vendor: productDetails.vendor,
           userId: user.user._id,
           amount: e.target.amount.value,
         },
@@ -61,7 +65,26 @@ const ProductDetails = () => {
     }
   };
 
+  const [winnerSelected, setWinnerSelected] = useState(false);
 
+  const handleCountdownComplete = async () => {
+    try {
+      if (!winnerSelected) {
+        const response = await axios.patch(`http://localhost:8000/api/v1/product/${params.id}/select-winner`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        if (response.status === 200) {
+          message.success('Winner selected successfully');
+          setWinnerSelected(true);
+          // Update UI or perform any necessary actions
+        }
+      }
+    } catch (error) {
+      console.error('Error selecting winner:', error);
+    }
+  };
 
   return (
     <div>
@@ -127,7 +150,14 @@ const ProductDetails = () => {
               <div className="text-2xl mb-2 font-semibold text-blue-900">
                 {productDetails?.title}
               </div>
-
+              {productDetails?.status === 'active' ? (
+                <p>
+                  Auction Ends in:{' '}
+                  <CountdownTimer endTime={productDetails?.endTime} onCountdownComplete={handleCountdownComplete} />
+                </p>
+              ) : (
+                <p>Winner: {productDetails?.winner?.name}</p>
+              )}
               <p className="font-medium flex items-center gap-2 pb-3">
                 <AiFillClockCircle />
                 <span>{productDetails?.createdAt}</span>
@@ -260,6 +290,7 @@ const ProductDetails = () => {
               </button>
             </div>
           </div>
+
         </div>
       </div>
     </div>

@@ -31,7 +31,7 @@ const Navbar = () => {
     {
       name: "Profile",
       id: 0,
-      path: "/profile",
+      path: "/complete-profile",
     },
     {
       name: "Notification",
@@ -48,7 +48,7 @@ const Navbar = () => {
     {
       name: "Profile",
       id: 0,
-      path: "/profile",
+      path: "/complete-profile",
     },
     {
       name: "Notification",

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {
   Button,
   Col,
+  DatePicker,
   Dropdown,
   Form,
   Input,
@@ -18,31 +19,40 @@ import { DownOutlined, UserOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { useUserContext } from "../../context/userContext";
 import TextArea from "antd/es/input/TextArea";
+import moment from "moment/moment";
+
 
 function Addproducts() {
   const navigate = useNavigate();
   const { user } = useUserContext();
-
+  console.log(user.user.role)
   const handleFinish = async (values) => {
     try {
-      const res = await axios.post(
-        "http://localhost:8000/api/v1/user/addProducts",
-        {
-          ...values,
-          userId: user.user._id,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      const end = new Date(values.endTime).getTime();
+      console.log(end)
+      if (user.user.role === 'vendor') {
+        const res = await axios.post(
+          "http://localhost:8000/api/v1/user/addProducts",
+          {
+            ...values,
+            vendor: user.user._id,
 
-      if (res.data.success) {
-        message.success(res.data.message);
-        navigate("/");
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+
+        if (res.data.success) {
+          message.success(res.data.message);
+          navigate("/");
+        } else {
+          message.error(res.data.message);
+        }
       } else {
-        message.error(res.data.message);
+        message.error("You are not vendor");
       }
     } catch (error) {
       console.log(error);
@@ -86,14 +96,14 @@ function Addproducts() {
             </Col>
             <Col xs={8}>
               <Form.Item
-                label="Total price"
-                name="totalPrice"
+                label="Start Price"
+                name="startPrice"
                 required
                 rules={[{ required: true }]}
               >
                 <Input
-                  type="total price"
-                  placeholder="your contact no"
+                  type="text"
+                  placeholder="startPrice"
                   className="shadow-sm bg-white appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
               </Form.Item>
@@ -106,24 +116,25 @@ function Addproducts() {
                 rules={[{ required: true }]}
               >
                 <Input
-                  type="Selling price"
-                  placeholder="your contact no"
+                  type="text"
+                  placeholder="Selling price"
                   className="shadow-sm bg-white appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
               </Form.Item>
             </Col>
             <Col xs={8}>
               <Form.Item
-                label="Minimum Bidding"
-                name="minPrice"
+                label="End Time"
+                name="endTime"
                 required
                 rules={[{ required: true }]}
               >
-                <Input
-                  type="Selling price"
-                  placeholder="your contact no"
-                  className="shadow-sm bg-white appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                />
+
+                <DatePicker showTime={{
+                  format: 'HH:mm',
+                }} format="YYYY-MM-DD HH:mm" />
+
+
               </Form.Item>
             </Col>
             <Col xs={8} md={8}>

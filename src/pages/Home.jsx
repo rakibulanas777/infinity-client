@@ -6,6 +6,7 @@ import { styled } from "styled-components";
 import { Link } from "react-router-dom";
 import { AiOutlinePlus } from "react-icons/ai";
 import io from 'socket.io-client';
+import CountdownTimer from "./Seller/CountdownTimer";
 const Home = () => {
   // const [product, setProduct] = useState(null);
   //get user
@@ -80,18 +81,19 @@ const Product = ({ curElem }) => {
       </div>
       <div className="card-data">
         <div className="flex items-center text-black justify-between mt-3">
-          <div className="font-medium">Timberland</div>
+          <div className="font-medium">Total bids</div>
           <Link to={`/allbids/${curElem._id}`}>
             <div className="font-medium">{curElem.bidCount} bids</div>
           </Link>
         </div>
+        <CountdownTimer endTime={curElem?.endTime} />
         <div className="flex items-center text-black justify-between">
-          <div className="">0 Gebote</div>
-          <div className="font-medium text-red-500 cursor-pointer">Fr. 15</div>
+          <div className="">Starting bid</div>
+          <div className="font-medium text-red-500 cursor-pointer">${curElem.startPrice}</div>
         </div>
         <div className="flex items-center text-black justify-between ">
-          <div className="">Softart </div>
-          <div className="font-medium text-red-500 cursor-pointer">Fr. 5</div>
+          <div className="">Selling price </div>
+          <div className="font-medium text-red-500 cursor-pointer">${curElem.sellingPrice}</div>
         </div>
       </div>
     </div>
