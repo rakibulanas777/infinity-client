@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {
   Button,
   Col,
+  DatePicker,
   Dropdown,
   Form,
   Input,
@@ -27,7 +28,7 @@ function Editproducts() {
   const handleFinish = async (values) => {
     try {
       const res = await axios.put(
-        `http://localhost:8000/api/v1/product/${productDetails._id}`,
+        `https://infinity-site.onrender.com/api/v1/product/${productDetails._id}`,
         {
           ...values,
         },
@@ -63,11 +64,14 @@ function Editproducts() {
           </div>
           <Row gutter={20}>
             <Col xs={24} md={12}>
-              <Form.Item label="Title" name="title">
+              <Form.Item
+                label="Title"
+                name="title"
+
+              >
                 <Input
                   type="text"
-                  initialValues={productDetails?.title}
-                  placeholder={productDetails?.title}
+                  placeholder="Enter product title"
                   className="shadow-sm bg-white appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
               </Form.Item>
@@ -76,54 +80,70 @@ function Editproducts() {
               <Form.Item label="Company" name="company">
                 <Input
                   type="text"
-                  initialValues={productDetails?.company}
-                  placeholder={productDetails?.company}
+                  placeholder="company ..."
                   className="shadow-sm bg-white appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
               </Form.Item>
             </Col>
             <Col xs={8}>
-              <Form.Item label="Total price" name="totalPrice">
+              <Form.Item
+                label="Start Price"
+                name="startPrice"
+
+              >
                 <Input
-                  type="total price"
-                  initialValues={productDetails?.totalPrice}
-                  placeholder={productDetails?.totalPrice}
+                  type="text"
+                  placeholder="startPrice"
                   className="shadow-sm bg-white appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
               </Form.Item>
             </Col>
             <Col xs={8}>
-              <Form.Item label="Selling price" name="sellingPrice">
+              <Form.Item
+                label="Selling price"
+                name="sellingPrice"
+
+              >
                 <Input
-                  type="Selling price"
-                  initialValues={productDetails?.sellingPrice}
-                  placeholder={productDetails?.sellingPrice}
+                  type="text"
+                  placeholder="Selling price"
                   className="shadow-sm bg-white appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
               </Form.Item>
             </Col>
             <Col xs={8}>
-              <Form.Item label="Minimum Bidding" name="minPrice">
-                <Input
-                  type="Selling price"
-                  initialValues={productDetails?.minPrice}
-                  placeholder={productDetails?.minPrice}
-                  className="shadow-sm bg-white appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                />
+              <Form.Item
+                label="End Time"
+                name="endTime"
+
+              >
+
+                <DatePicker showTime={{
+                  format: 'HH:mm',
+                }} format="YYYY-MM-DD HH:mm" />
+
+
               </Form.Item>
             </Col>
             <Col xs={8} md={8}>
-              <Form.Item label="Picture" name="image">
+              <Form.Item
+                label="Picture"
+                name="image"
+
+              >
                 <Input
                   type="text"
-                  initialValues={productDetails?.image}
                   placeholder="image url"
                   className="shadow-sm bg-white appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
               </Form.Item>
             </Col>
             <Col xs={8} md={8}>
-              <Form.Item label="Catagory" name="catagory">
+              <Form.Item
+                label="Catagory"
+                name="catagory"
+
+              >
                 <Select placeholder="catagory">
                   <Select.Option value="antiquitäten">
                     Antiquitäten
@@ -134,21 +154,27 @@ function Editproducts() {
             </Col>
 
             <Col xs={8} md={8}>
-              <Form.Item label="Location" name="location">
+              <Form.Item
+                label="Location"
+                name="location"
+
+
+              >
                 <Input
                   type="text"
-                  initialValues={productDetails?.location}
-                  placeholder={productDetails?.location}
+                  placeholder="your clinic address"
                   className="shadow-sm bg-white appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
               </Form.Item>
             </Col>
             <Col xs={24} md={24}>
-              <Form.Item label="Product description" name="description">
+              <Form.Item
+                label="Product description"
+                name="description"
+              >
                 <TextArea
                   type="text"
-                  initialValues={productDetails?.description}
-                  placeholder={productDetails?.description}
+                  placeholder="Product description"
                   className="shadow-sm bg-white appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
               </Form.Item>
@@ -159,7 +185,7 @@ function Editproducts() {
                 className="bg-red-500 w-full hover:bg-red-700 mb-3 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="submit"
               >
-                add product
+                update products
               </button>
             </Col>
           </Row>

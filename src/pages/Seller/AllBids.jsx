@@ -14,7 +14,7 @@ const AllBids = () => {
     const getBids = async () => {
         try {
             const res = await axios.get(
-                `http://localhost:8000/api/v1/bids/product/${params.productId}/bids`,
+                `https://infinity-site.onrender.com/api/v1/bids/product/${params.productId}/bids`,
 
                 {
                     headers: {
@@ -39,7 +39,7 @@ const AllBids = () => {
     const handleApproved = async (id) => {
         try {
             const res = await axios.put(
-                `http://localhost:8000/api/v1/bids/${id}/approve`,
+                `https://infinity-site.onrender.com/api/v1/bids/${id}/approve`,
                 {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -75,21 +75,7 @@ const AllBids = () => {
             dataIndex: 'amount',
 
         },
-        {
-            title: 'Action',
-            key: 'action',
-            render: (_, record) => (
-                <Space size="middle">
-                    <button
-                        className="bg-green-500 w-full hover:bg-green-700 mb-3 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                        onClick={() => handleApproved(record.key)}
-                        type="submit"
-                    >
-                        Approved
-                    </button>
-                </Space>
-            ),
-        },
+
 
     ];
 

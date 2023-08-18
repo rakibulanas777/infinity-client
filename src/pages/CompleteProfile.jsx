@@ -11,7 +11,7 @@ const CompleteProfile = () => {
 
 
             const res = await axios.put(
-                "http://localhost:8000/api/v1/user/complete-profile",
+                "https://infinity-site.onrender.com/api/v1/user/complete-profile",
                 {
                     ...values,
                     userId: user.user._id,

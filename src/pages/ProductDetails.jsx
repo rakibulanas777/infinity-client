@@ -21,7 +21,7 @@ const ProductDetails = () => {
 
   const getProductsDetails = async () => {
     try {
-      const res = await axios.get(`http://localhost:8000/api/v1/product/${params.id}`);
+      const res = await axios.get(`https://infinity-site.onrender.com/api/v1/product/${params.id}`);
 
       if (res.data.success) {
         setProductDetails(res.data.data.product);
@@ -44,7 +44,7 @@ const ProductDetails = () => {
         return <Navigate to="/complete-profile" />;;
       }
       const res = await axios.post(
-        `http://localhost:8000/api/v1/bids/${params.id}`,
+        `https://infinity-site.onrender.com/api/v1/bids/${params.id}`,
         {
           vendor: productDetails.vendor,
           userId: user.user._id,
@@ -70,7 +70,7 @@ const ProductDetails = () => {
   const handleCountdownComplete = async () => {
     try {
       if (!winnerSelected) {
-        const response = await axios.patch(`http://localhost:8000/api/v1/product/${params.id}/select-winner`, {
+        const response = await axios.patch(`https://infinity-site.onrender.com/api/v1/product/${params.id}/select-winner`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -85,6 +85,8 @@ const ProductDetails = () => {
       console.error('Error selecting winner:', error);
     }
   };
+
+
 
   return (
     <div>
@@ -165,27 +167,27 @@ const ProductDetails = () => {
               <hr />
               <p className="text-sm mb-2">starting bid</p>
               {/* <p className="font-semibold  mb-2">${price}</p> */}
-
-              <form className="border-b-2 border-gray-100 pb-4" onSubmit={handleOnBids}>
-                {/* <label
+              {
+                productDetails?.status === 'ended' ? (<><p className=" font-semibold text-xl text-red-800">This is closed</p></>) : (<><form className="border-b-2 border-gray-100 pb-4" onSubmit={handleOnBids}>
+                  {/* <label
                   htmlFor="offer"
                   type="button"
                   className="py-2 text-center cursor-pointer px-4 mt-4 rounded bg-red-500 text-white font-medium !w-full"
                 >
                   offer
                 </label> */}
-                <input
-                  type="text"
-                  name="amount"
-                  className="input input-bordered bg-transparent w-full"
-                />
-                <button
-                  type="submit"
-                  className="py-2 text-center cursor-pointer px-4 mt-4 rounded bg-red-500 text-white font-medium !w-full"
-                >
-                  offer
-                </button>
-                {/* <input type="checkbox" id="offer" className="modal-toggle" />
+                  <input
+                    type="text"
+                    name="amount"
+                    className="input input-bordered bg-transparent w-full"
+                  />
+                  <button
+                    type="submit"
+                    className="py-2 text-center cursor-pointer px-4 mt-4 rounded bg-red-500 text-white font-medium !w-full"
+                  >
+                    offer
+                  </button>
+                  {/* <input type="checkbox" id="offer" className="modal-toggle" />
                 <div className="modal">
                   <div className="modal-box relative bg-white w-96 shadow">
                     <label
@@ -246,36 +248,11 @@ const ProductDetails = () => {
                    
                   </div>
                 </div> */}
-              </form>
-              <button className="py-2 px-4 mt-4 rounded border border-red-500 font-medium w-full">
-                favorite
-              </button>
-
-              <div className="pb-3">
-                <div className="text-sm">Delivery</div>
-                <div className="text-md">B Mail package , CHF 8.50</div>
-              </div>
-              {/* <div className="text-blue-900 text-md cursor-pointer">
-                {user.name}
-              </div> */}
-              {/* <div className="product-data-info">
-						<p>
-							Available:
-							<span> {stock > 0 ? "In Stock" : "Not Available"}</span>
-						</p>
-						<p>
-							ID : <span> {id} </span>
-						</p>
-						<p>
-							Brand :<span> {company} </span>
-						</p>
-					</div> */}
-            </div>
-            <div className="product-data border rounded p-4 text-black mb-5">
-              <div className="text-xl border-b-2 border-gray-200 pb-2 mb-2">
-                Previous bids (0)
-              </div>
-              <div className="text-md">There is currently no bid.</div>
+                </form>
+                  <button className="py-2 px-4 mt-4 rounded border border-red-500 font-medium w-full">
+                    favorite
+                  </button></>)
+              }
             </div>
             <div className="product-data border rounded p-4 text-black">
               <div className="text-xl border-b-2 border-gray-200 pb-2 mb-2">

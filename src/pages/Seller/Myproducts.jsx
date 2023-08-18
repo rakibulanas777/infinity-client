@@ -2,29 +2,32 @@ import React, { useEffect, useState } from "react";
 import { useUserContext } from "../../context/userContext";
 import axios from "axios";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import { styled } from "styled-components";
 import { message } from "antd";
 import { useProductContext } from "../../context/productContext";
+
 const Myproducts = () => {
   const [myProduct, setmyProduct] = useState([]);
   const { user } = useUserContext();
-  console.log(user?.user._id);
   //get user
+  const { product, setProduct } = useProductContext();
+  const params = useParams();
+  console.log(params.vendorId)
   const getProducts = async () => {
     try {
-      const res = await axios.post(
-        "http://localhost:8000/api/v1/product",
-        { userId: user?.user._id },
+      const res = await axios.get(
+        `https://infinity-site.onrender.com/api/v1/product/vendor/${params.vendorId}`,
+
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
-
+      setmyProduct(res.data.products)
       if (res.data.success) {
-        setmyProduct(res.data.data.products);
+
       } else {
         <Navigate to="/login" />;
       }
@@ -35,7 +38,7 @@ const Myproducts = () => {
   useEffect(() => {
     getProducts();
   }, []);
-  console.log(myProduct);
+
 
   return (
     <div>
@@ -61,7 +64,7 @@ const Product = ({ curElem }) => {
   const { getProductDetails } = useProductContext();
   const handleDelete = (id) => {
     alert("are you sure procesd");
-    fetch(`http://localhost:8000/api/v1/product/${id}`, {
+    fetch(`https://infinity-site.onrender.com/api/v1/product/${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json()) // or res.json()
@@ -72,7 +75,7 @@ const Product = ({ curElem }) => {
   };
   const navigate = useNavigate();
   const handleEdit = (id) => {
-    fetch(`http://localhost:8000/api/v1/product/${id}`)
+    fetch(`https://infinity-site.onrender.com/api/v1/product/${id}`)
       .then((res) => res.json()) // or res.json()
       .then((data) => {
         getProductDetails(data.data.product);
@@ -125,7 +128,7 @@ const Product = ({ curElem }) => {
       <div className="card-data">
         <div className="flex items-center text-black justify-between mt-3">
           <div className="font-medium">Timberland</div>
-          <div className="font-medium">{curElem.bids.length} bids</div>
+          <div className="font-medium">{curElem.bidCount}  bids</div>
         </div>
         <div className="flex items-center text-black justify-between">
           <div className="">0 Gebote</div>

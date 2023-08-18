@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useProductContext } from "../context/productContext";
 
 const Products = ({ product }) => {
-  console.log(product.products);
+ 
 
   return (
     <div className="feature-product">

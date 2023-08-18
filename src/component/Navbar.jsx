@@ -38,11 +38,7 @@ const Navbar = () => {
       id: 1,
       path: "/notification",
     },
-    {
-      name: "Orders",
-      id: 2,
-      path: "/orders",
-    },
+
   ];
   const navItemSeller = [
     {
@@ -56,9 +52,9 @@ const Navbar = () => {
       path: "/notification",
     },
     {
-      name: "Orders",
+      name: "Myproducts",
       id: 2,
-      path: "/orders",
+      path: `/myproducts/${user?.user._id}`,
     },
     {
       name: "Add products",
@@ -89,7 +85,7 @@ const Navbar = () => {
     try {
       if (checked) {
         const res = await axios.put(
-          `http://localhost:8000/api/v1/user/switch-to-user/${user?.user._id}`,
+          `https://infinity-site.onrender.com/api/v1/user/switch-to-user/${user?.user._id}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -105,7 +101,7 @@ const Navbar = () => {
         }
       } else {
         const res = await axios.put(
-          `http://localhost:8000/api/v1/user/switch-to-vendor/${user?.user._id}`,
+          `https://infinity-site.onrender.com/api/v1/user/switch-to-vendor/${user?.user._id}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -152,7 +148,7 @@ const Navbar = () => {
               />
               <Link
                 className="text-2xl text-black font-bold cursor-pointer hover:text-indigo-900"
-                href="/"
+                to="/"
               >
                 infinity24
               </Link>

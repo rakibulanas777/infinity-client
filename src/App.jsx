@@ -15,6 +15,7 @@ import Editproducts from "./pages/Seller/Editproducts";
 import ProductDetails from "./pages/ProductDetails";
 import AllBids from "./pages/Seller/AllBids";
 import CompleteProfile from "./pages/CompleteProfile";
+import Notification from "./pages/Seller/Notification";
 
 function App() {
   return (
@@ -55,6 +56,14 @@ function App() {
           }
         />
         <Route
+          path="/notification"
+          element={
+            <ProtectedRoute>
+              <Notification />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/complete-profile"
           element={
             <ProtectedRoute>
@@ -87,7 +96,7 @@ function App() {
           }
         />
         <Route
-          path="/myproducts"
+          path="/myproducts/:vendorId"
           element={
             <ProtectedRoute>
               <Myproducts />

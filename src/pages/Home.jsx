@@ -11,9 +11,10 @@ const Home = () => {
   // const [product, setProduct] = useState(null);
   //get user
   const { product, setProduct } = useProductContext();
+
   const getProducts = async () => {
     try {
-      const res = await axios.get("http://localhost:8000/api/v1/product");
+      const res = await axios.get("https://infinity-site.onrender.com/api/v1/product");
 
       if (res.data.success) {
         setProduct(res.data.data.products);
@@ -24,8 +25,7 @@ const Home = () => {
   };
   useEffect(() => {
     getProducts();
-  }, []);
-
+  }, [product]);
   return (
     <div>
       <Wrapper>
