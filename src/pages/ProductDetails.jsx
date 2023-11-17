@@ -21,7 +21,7 @@ const ProductDetails = () => {
 
   const getProductsDetails = async () => {
     try {
-      const res = await axios.get(`https://infinity-site.onrender.com/api/v1/product/${params.id}`);
+      const res = await axios.get(`http://localhost:8000/api/v1/product/${params.id}`);
 
       if (res.data.success) {
         setProductDetails(res.data.data.product);
@@ -44,7 +44,7 @@ const ProductDetails = () => {
         return <Navigate to="/complete-profile" />;;
       }
       const res = await axios.post(
-        `https://infinity-site.onrender.com/api/v1/bids/${params.id}`,
+        `http://localhost:8000/api/v1/bids/${params.id}`,
         {
           vendor: productDetails.vendor,
           userId: user.user._id,
@@ -70,7 +70,7 @@ const ProductDetails = () => {
   const handleCountdownComplete = async () => {
     try {
       if (!winnerSelected) {
-        const response = await axios.patch(`https://infinity-site.onrender.com/api/v1/product/${params.id}/select-winner`, {
+        const response = await axios.patch(`http://localhost:8000/api/v1/product/${params.id}/select-winner`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },

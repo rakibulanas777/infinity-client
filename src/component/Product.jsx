@@ -4,8 +4,6 @@ import styled from "styled-components";
 import { useProductContext } from "../context/productContext";
 
 const Products = ({ product }) => {
- 
-
   return (
     <div className="feature-product">
       <Wrapper>

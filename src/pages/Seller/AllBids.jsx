@@ -14,7 +14,7 @@ const AllBids = () => {
     const getBids = async () => {
         try {
             const res = await axios.get(
-                `https://infinity-site.onrender.com/api/v1/bids/product/${params.productId}/bids`,
+                `http://localhost:8000/api/v1/bids/product/${params.productId}/bids`,
 
                 {
                     headers: {
@@ -39,7 +39,7 @@ const AllBids = () => {
     const handleApproved = async (id) => {
         try {
             const res = await axios.put(
-                `https://infinity-site.onrender.com/api/v1/bids/${id}/approve`,
+                `http://localhost:8000/api/v1/bids/${id}/approve`,
                 {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("token")}`,

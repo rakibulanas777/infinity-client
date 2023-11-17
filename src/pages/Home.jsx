@@ -14,7 +14,7 @@ const Home = () => {
 
   const getProducts = async () => {
     try {
-      const res = await axios.get("https://infinity-site.onrender.com/api/v1/product");
+      const res = await axios.get("http://localhost:8000/api/v1/product");
 
       if (res.data.success) {
         setProduct(res.data.data.products);
@@ -46,7 +46,7 @@ const Home = () => {
 export default Home;
 
 const Product = ({ curElem }) => {
-  console.log(curElem);
+
 
   return (
     <div className="card h-full bg-white w-full shadow-sm rounded-md bg-clip-padding backdrop-filter backdrop-blur-lg  border p-3">

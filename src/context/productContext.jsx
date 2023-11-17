@@ -8,8 +8,8 @@ const ProductProvider = ({ children }) => {
   const [productDetails, getProductDetails] = useState(null);
 
 
-  
-  console.log(product)
+
+
   return (
     <ProductContext.Provider
       value={{ product, setProduct, productDetails, getProductDetails }}

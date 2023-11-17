@@ -85,7 +85,7 @@ const Navbar = () => {
     try {
       if (checked) {
         const res = await axios.put(
-          `https://infinity-site.onrender.com/api/v1/user/switch-to-user/${user?.user._id}`,
+          `http://localhost:8000/api/v1/user/switch-to-user/${user?.user._id}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -101,7 +101,7 @@ const Navbar = () => {
         }
       } else {
         const res = await axios.put(
-          `https://infinity-site.onrender.com/api/v1/user/switch-to-vendor/${user?.user._id}`,
+          `http://localhost:8000/api/v1/user/switch-to-vendor/${user?.user._id}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,

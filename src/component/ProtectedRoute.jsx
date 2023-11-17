@@ -5,12 +5,12 @@ import { useUserContext } from "../context/userContext";
 
 export default function ProtectedRoute({ children }) {
   const { user, setUser } = useUserContext();
-
+  console.log(user)
   //get user
   const getUser = async () => {
     try {
       const res = await axios.post(
-        "https://infinity-site.onrender.com/api/v1/user/getUserData",
+        "http://localhost:8000/api/v1/user/getUserData",
         { token: localStorage.getItem("token") },
         {
           headers: {
@@ -26,7 +26,7 @@ export default function ProtectedRoute({ children }) {
         localStorage.clear();
       }
     } catch (error) {
-      localStorage.clear();
+      // localStorage.clear();
       console.log(error);
     }
   };

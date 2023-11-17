@@ -6,7 +6,7 @@ const Login = () => {
   const handleOnSubmit = (values) => {
     const userData = { ...values };
 
-    fetch("https://infinity-site.onrender.com/api/v1/user/login", {
+    fetch("http://localhost:8000/api/v1/user/login", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -15,6 +15,7 @@ const Login = () => {
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log(data)
         if (data.success) {
           localStorage.setItem("token", data.data.token);
           message.success(data.message);

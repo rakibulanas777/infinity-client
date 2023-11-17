@@ -17,7 +17,7 @@ const Myproducts = () => {
   const getProducts = async () => {
     try {
       const res = await axios.get(
-        `https://infinity-site.onrender.com/api/v1/product/vendor/${params.vendorId}`,
+        `http://localhost:8000/api/v1/product/vendor/${params.vendorId}`,
 
         {
           headers: {
@@ -64,7 +64,7 @@ const Product = ({ curElem }) => {
   const { getProductDetails } = useProductContext();
   const handleDelete = (id) => {
     alert("are you sure procesd");
-    fetch(`https://infinity-site.onrender.com/api/v1/product/${id}`, {
+    fetch(`http://localhost:8000/api/v1/product/${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json()) // or res.json()
@@ -75,7 +75,7 @@ const Product = ({ curElem }) => {
   };
   const navigate = useNavigate();
   const handleEdit = (id) => {
-    fetch(`https://infinity-site.onrender.com/api/v1/product/${id}`)
+    fetch(`http://localhost:8000/api/v1/product/${id}`)
       .then((res) => res.json()) // or res.json()
       .then((data) => {
         getProductDetails(data.data.product);

@@ -16,11 +16,13 @@ import ProductDetails from "./pages/ProductDetails";
 import AllBids from "./pages/Seller/AllBids";
 import CompleteProfile from "./pages/CompleteProfile";
 import Notification from "./pages/Seller/Notification";
+import NavBar2 from "./component/NavBar2";
+import './App.css'
 
 function App() {
   return (
     <>
-      <Navbar />
+      <NavBar2 />
       <Routes>
         <Route
           path="/"
