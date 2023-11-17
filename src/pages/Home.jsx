@@ -8,6 +8,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import Banner1 from "../img/banner/banner1.jpg";
 import Banner2 from "../img/banner/banner2.jpg";
 import CountdownTimer from "./Seller/CountdownTimer";
+import { FaHeart } from "react-icons/fa";
 import Hero from "../component/Hero";
 import BannerReverse from "../component/BannerReverse";
 import Banner from "../component/Banner";
@@ -51,7 +52,7 @@ const Home = () => {
       <div className="container py-8 mx-auto">
         <div className="bg-gray-100 p-5 mb-14">
           <div className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-bold text-black py-6">Product That closing soon</div>
-          <div className="grid 2xl:grid-cols-6 xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4 ">
+          <div className="grid 2xl:grid-cols-6 xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1  gap-4 ">
             {endProduct?.map((curElem) => (
               <Product curElem={curElem} />
             ))}
@@ -64,7 +65,7 @@ const Home = () => {
         />
         <div className="bg-gray-100 p-5 mb-14">
           <div className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-bold text-black py-6">New arrivals products</div>
-          <div className="grid 2xl:grid-cols-6 xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4 ">
+          <div className="grid 2xl:grid-cols-6 xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3 grid-cols-1 sm:grid-cols-2 gap-4 ">
             {newProduct?.map((curElem) => (
               <Product curElem={curElem} />
             ))}
@@ -84,8 +85,6 @@ const Home = () => {
 export default Home;
 
 const Product = ({ curElem }) => {
-
-
   return (
     <div className="card h-full bg-white w-full shadow-sm rounded-md bg-clip-padding backdrop-filter backdrop-blur-lg  border p-3">
       {/* <div className="flex space-x-2 cursor-pointer items-center mb-3">
@@ -113,7 +112,7 @@ const Product = ({ curElem }) => {
         </Link>
         <div className="absolute top-2 right-2">
           <div className="shadow-sm text-white bg-red-500 hover:bg-red-700  cursor-pointer p-5  rounded-full  relative">
-            <AiOutlinePlus className="absolute text-xl font-medium top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 " />
+            <FaHeart className="absolute text-xl font-medium top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 " />
           </div>
         </div>
       </div>
