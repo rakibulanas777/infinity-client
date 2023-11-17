@@ -1,13 +1,16 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useProductContext } from "../context/productContext";
-import Products from "../component/Product";
+
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
 import { AiOutlinePlus } from "react-icons/ai";
-import io from 'socket.io-client';
+import Banner1 from "../img/banner/banner1.jpg";
+import Banner2 from "../img/banner/banner2.jpg";
 import CountdownTimer from "./Seller/CountdownTimer";
 import Hero from "../component/Hero";
+import BannerReverse from "../component/BannerReverse";
+import Banner from "../component/Banner";
 const Home = () => {
   // const [product, setProduct] = useState(null);
   //get user
@@ -37,41 +40,43 @@ const Home = () => {
     }
   };
 
-
-
   useEffect(() => {
     getNewProducts();
     getEndProducts()
   }, [newProduct]);
 
-
-
-
-
-
   return (
     <div>
       <Hero />
-      <Wrapper>
-        <div className="container py-8 mx-auto">
-          <div className="bg-gray-100 p-5 mb-14">
-            <div className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-bold text-black py-6">Product That closing soon</div>
-            <div className="grid 2xl:grid-cols-6 xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4 ">
-              {endProduct?.map((curElem) => (
-                <Product curElem={curElem} />
-              ))}
-            </div>
-          </div>
-          <div className="bg-gray-100 p-5 mb-14">
-            <div className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-bold text-black py-6">New arrivals products</div>
-            <div className="grid 2xl:grid-cols-6 xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4 ">
-              {newProduct?.map((curElem) => (
-                <Product curElem={curElem} />
-              ))}
-            </div>
+      <div className="container py-8 mx-auto">
+        <div className="bg-gray-100 p-5 mb-14">
+          <div className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-bold text-black py-6">Product That closing soon</div>
+          <div className="grid 2xl:grid-cols-6 xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4 ">
+            {endProduct?.map((curElem) => (
+              <Product curElem={curElem} />
+            ))}
           </div>
         </div>
-      </Wrapper>
+        <Banner
+          title="Creative harmonious living"
+          text=" RAOUF Products are all made to standard sizes so that you can mix and match them freely."
+          img={Banner1}
+        />
+        <div className="bg-gray-100 p-5 mb-14">
+          <div className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-bold text-black py-6">New arrivals products</div>
+          <div className="grid 2xl:grid-cols-6 xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4 ">
+            {newProduct?.map((curElem) => (
+              <Product curElem={curElem} />
+            ))}
+          </div>
+        </div>
+        <BannerReverse
+          title="Comfortable & Elegante Living"
+          text=" RAOUF Products are all made to standard sizes so that you can mix and match them freely."
+          img={Banner2}
+        />
+      </div>
+
     </div>
   );
 };
@@ -135,36 +140,3 @@ const Product = ({ curElem }) => {
   );
 };
 
-const Wrapper = styled.section`
-  figure {
-    width: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.5s linear;
-    &::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 0%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-      transition: all 0.2s linear;
-      cursor: pointer;
-    }
-    &:hover::after {
-      width: 100%;
-    }
-    &:hover img {
-      transform: scale(1.3);
-    }
-    img {
-      height: 10rem;
-
-      transition: all 0.2s linear;
-    }
-  }
-`;

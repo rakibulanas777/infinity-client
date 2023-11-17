@@ -1,6 +1,3 @@
-import { useEffect, useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import { Route, Routes } from "react-router-dom";
 import ProtectedRoute from "./component/ProtectedRoute";
 import Home from "./pages/Home";
@@ -18,11 +15,12 @@ import CompleteProfile from "./pages/CompleteProfile";
 import Notification from "./pages/Seller/Notification";
 import NavBar2 from "./component/NavBar2";
 import './App.css'
+import Newsletter from "./component/Newsletter";
 
 function App() {
   return (
     <>
-      <Navbar />
+      <NavBar2 />
       <Routes>
         <Route
           path="/"
@@ -106,6 +104,7 @@ function App() {
           }
         />
       </Routes>
+      <Newsletter />
       <Footer />
     </>
   );
