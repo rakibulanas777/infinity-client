@@ -21,7 +21,7 @@ const Home = () => {
   const [endProduct, setEndProduct] = useState([])
   const getNewProducts = async () => {
     try {
-      const res = await axios.get("http://localhost:8000/api/v1/product/products/new");
+      const res = await axios.get("https://infinity-site.onrender.com/api/v1/product/products/new");
 
       if (res.data.success) {
         setNewProduct(res.data.data.products);
@@ -32,7 +32,7 @@ const Home = () => {
   };
   const getEndProducts = async () => {
     try {
-      const res = await axios.get("http://localhost:8000/api/v1/product/products/ending-soon");
+      const res = await axios.get("https://infinity-site.onrender.com/api/v1/product/products/ending-soon");
 
       if (res.data.success) {
         setEndProduct(res.data.data.products);

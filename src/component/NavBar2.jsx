@@ -78,7 +78,7 @@ const NavBar2 = () => {
         try {
             if (checked) {
                 const res = await axios.put(
-                    `http://localhost:8000/api/v1/user/switch-to-user/${user?.user._id}`,
+                    `https://infinity-site.onrender.com/api/v1/user/switch-to-user/${user?.user._id}`,
                     {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -94,7 +94,7 @@ const NavBar2 = () => {
                 }
             } else {
                 const res = await axios.put(
-                    `http://localhost:8000/api/v1/user/switch-to-vendor/${user?.user._id}`,
+                    `https://infinity-site.onrender.com/api/v1/user/switch-to-vendor/${user?.user._id}`,
                     {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -122,7 +122,7 @@ const NavBar2 = () => {
             <div className="container mx-auto py-6 px-10 sm:px-8 md:px-6 lg:px-10">
                 <div className="flex justify-between items-center">
                     <Link
-                        className="text-2xl text-black font-bold cursor-pointer hover:text-indigo-900"
+                        className="text-2xl text-black font-bold cursor-pointer hover:text-red-700"
                         to="/"
                     >
                         infinity24
@@ -148,7 +148,7 @@ const NavBar2 = () => {
                                         tabIndex={0}
                                         className="btn btn-ghost btn-circle avatar"
                                     >
-                                        <div className="w-10 rounded-full bg-blue-500 relative">
+                                        <div className="w-10 rounded-full bg-red-500 relative">
                                             <div className="text-xl font-semibold absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white">
                                                 {user?.user.name.charAt(0)}
                                             </div>

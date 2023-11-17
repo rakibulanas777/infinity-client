@@ -10,7 +10,7 @@ export default function ProtectedRoute({ children }) {
   const getUser = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:8000/api/v1/user/getUserData",
+        "https://infinity-site.onrender.com/api/v1/user/getUserData",
         { token: localStorage.getItem("token") },
         {
           headers: {
@@ -22,7 +22,7 @@ export default function ProtectedRoute({ children }) {
       if (res.data.success) {
         setUser(res.data.data);
       } else {
-        <Navigate to="/login" />;
+        <Navigate to="/home" />;
         localStorage.clear();
       }
     } catch (error) {
@@ -38,6 +38,6 @@ export default function ProtectedRoute({ children }) {
   if (localStorage.getItem("token")) {
     return children;
   } else {
-    return <Navigate to="/login" />;
+    return <Navigate to="/home" />;
   }
 }
