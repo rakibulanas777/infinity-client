@@ -13,12 +13,11 @@ import {
   MdArrowDropDown,
   MdLocationOn,
 } from "react-icons/md";
-import data from "./data";
 import { useUserContext } from "../context/userContext";
 import axios from "axios";
 const Navbar = () => {
   const [active, setActive] = useState(0);
-  const { products } = data;
+
   const [nav, setNav] = useState(false);
   const handleNav = () => {
     setNav(!nav);

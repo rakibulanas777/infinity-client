@@ -22,14 +22,14 @@ import './App.css'
 function App() {
   return (
     <>
-      <NavBar2 />
+      <Navbar />
       <Routes>
         <Route
           path="/"
           element={
-            <PublicRoute>
+            <ProtectedRoute>
               <Home />
-            </PublicRoute>
+            </ProtectedRoute>
           }
         />
 

@@ -137,7 +137,7 @@ function Addproducts() {
 
               </Form.Item>
             </Col>
-            <Col xs={8} md={8}>
+            <Col xs={24} md={24}>
               <Form.Item
                 label="Picture"
                 name="image"
@@ -152,13 +152,64 @@ function Addproducts() {
             </Col>
             <Col xs={8} md={8}>
               <Form.Item
+                label="texture"
+                name="texture"
+                rules={[{ required: true }]}
+              >
+                <Input
+                  type="texture"
+                  placeholder="image url"
+                  className="shadow-sm bg-white appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+              </Form.Item>
+            </Col>
+            <Col xs={8} md={8}>
+              <Form.Item
+                label="weight"
+                name="weight"
+                rules={[{ required: true }]}
+              >
+                <Input
+                  type="weight"
+                  placeholder="weight"
+                  className="shadow-sm bg-white appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+              </Form.Item>
+            </Col>
+            <Col xs={8} md={8}>
+              <Form.Item
+                label="size"
+                name="size"
+                rules={[{ required: true }]}
+              >
+                <Input
+                  type="text"
+                  placeholder="size"
+                  className="shadow-sm bg-white appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+              </Form.Item>
+            </Col>
+            <Col xs={8} md={8}>
+              <Form.Item
                 label="Catagory"
                 name="catagory"
                 rules={[{ required: true }]}
               >
                 <Select placeholder="catagory">
-                  <Select.Option value="antiquitäten">
-                    Antiquitäten
+                  <Select.Option value="chair">
+                    chair
+                  </Select.Option>
+                  <Select.Option value="kitchen">
+                    kitchen
+                  </Select.Option>
+                  <Select.Option value="lamp">
+                    lamp
+                  </Select.Option>
+                  <Select.Option value="furniture">
+                    furniture
+                  </Select.Option>
+                  <Select.Option value="skin-care">
+                    skin-care
                   </Select.Option>
                   <Select.Option value="audio">Audio</Select.Option>
                 </Select>

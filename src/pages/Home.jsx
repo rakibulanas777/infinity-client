@@ -12,13 +12,13 @@ const Home = () => {
   // const [product, setProduct] = useState(null);
   //get user
   const { product, setProduct } = useProductContext();
-
+  const [newProduct, setNewProduct] = useState([])
   const getProducts = async () => {
     try {
-      const res = await axios.get("http://localhost:8000/api/v1/product");
+      const res = await axios.get("http://localhost:8000/api/v1/product/products/new");
 
       if (res.data.success) {
-        setProduct(res.data.data.products);
+        setNewProduct(res.data.data.products);
       }
     } catch (error) {
       console.log(error);
@@ -26,15 +26,16 @@ const Home = () => {
   };
   useEffect(() => {
     getProducts();
-  }, [product]);
+  }, [newProduct]);
   return (
     <div>
       <Hero />
       <Wrapper>
         <div className="container py-8 mx-auto">
           <div className="bg-gray-100 p-5">
-            <div className="grid 2xl:grid-cols-6 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4 ">
-              {product?.map((curElem) => (
+            <div className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-bold text-black py-6">New arrivals products</div>
+            <div className="grid 2xl:grid-cols-6 xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4 ">
+              {newProduct?.map((curElem) => (
                 <Product curElem={curElem} />
               ))}
             </div>
@@ -69,11 +70,11 @@ const Product = ({ curElem }) => {
 
         <div className="text-xl font-semibold text-blue-900">@{user.name}</div>
       </div> */}
-      <div className="relative">
+      <div className="relative mb-3">
         <Link to={`/${curElem._id}`}>
-          <figure>
-            <img src={curElem.image} alt={curElem.title} />
-          </figure>
+
+          <img src={curElem.image} alt={curElem.title} />
+
         </Link>
         <div className="absolute top-2 right-2">
           <div className="shadow-sm text-white bg-red-500 hover:bg-red-700  cursor-pointer p-5  rounded-full  relative">
@@ -81,22 +82,24 @@ const Product = ({ curElem }) => {
           </div>
         </div>
       </div>
-      <div className="card-data">
-        <div className="flex items-center text-black justify-between mt-3">
-          <div className="font-medium">Total bids</div>
-          <Link to={`/allbids/${curElem._id}`}>
-            <div className="font-medium">{curElem.bidCount} bids</div>
-          </Link>
-        </div>
+      <div className="card-data text-black text-xl">
+        <p className=" font-semibold text-black">{curElem?.title}</p>
+
         <CountdownTimer endTime={curElem?.endTime} />
         <div className="flex items-center text-black justify-between">
           <div className="">Starting bid</div>
           <div className="font-medium text-red-500 cursor-pointer">${curElem.startPrice}</div>
         </div>
-        <div className="flex items-center text-black justify-between ">
+        <div className="flex items-center  justify-between mt-2">
+          <div className="font-medium">Total bids</div>
+          <Link to={`/allbids/${curElem._id}`}>
+            <div className="font-medium">{curElem.bidCount} bids</div>
+          </Link>
+        </div>
+        {/* <div className="flex items-center text-black justify-between ">
           <div className="">Selling price </div>
           <div className="font-medium text-red-500 cursor-pointer">${curElem.sellingPrice}</div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

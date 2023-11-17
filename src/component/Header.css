@@ -1,6 +1,6 @@
 .grid-container {
   display: grid;
-  height: 50rem;
+  height: 36rem;
   grid-template-columns: 2fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   grid-template-areas: "one two four" "one two four-low";
