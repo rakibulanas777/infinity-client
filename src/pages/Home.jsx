@@ -13,7 +13,8 @@ const Home = () => {
   //get user
   const { product, setProduct } = useProductContext();
   const [newProduct, setNewProduct] = useState([])
-  const getProducts = async () => {
+  const [endProduct, setEndProduct] = useState([])
+  const getNewProducts = async () => {
     try {
       const res = await axios.get("http://localhost:8000/api/v1/product/products/new");
 
@@ -24,15 +25,44 @@ const Home = () => {
       console.log(error);
     }
   };
+  const getEndProducts = async () => {
+    try {
+      const res = await axios.get("http://localhost:8000/api/v1/product/products/ending-soon");
+
+      if (res.data.success) {
+        setEndProduct(res.data.data.products);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
+
   useEffect(() => {
-    getProducts();
+    getNewProducts();
+    getEndProducts()
   }, [newProduct]);
+
+
+
+
+
+
   return (
     <div>
       <Hero />
       <Wrapper>
         <div className="container py-8 mx-auto">
-          <div className="bg-gray-100 p-5">
+          <div className="bg-gray-100 p-5 mb-14">
+            <div className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-bold text-black py-6">Product That closing soon</div>
+            <div className="grid 2xl:grid-cols-6 xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4 ">
+              {endProduct?.map((curElem) => (
+                <Product curElem={curElem} />
+              ))}
+            </div>
+          </div>
+          <div className="bg-gray-100 p-5 mb-14">
             <div className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-bold text-black py-6">New arrivals products</div>
             <div className="grid 2xl:grid-cols-6 xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4 ">
               {newProduct?.map((curElem) => (
