@@ -8,11 +8,14 @@ import { HiMenu } from "react-icons/hi";
 import { FaHeart } from "react-icons/fa";
 import axios from 'axios';
 import { useUserContext } from '../context/userContext';
+import { useCartContext } from '../context/cart_context';
 
 
 const NavBar2 = () => {
     const [active, setActive] = useState(0);
 
+    const { cartItems, removeItem, addToCart } = useCartContext();
+    console.log(cartItems)
     const [nav, setNav] = useState(false);
     const handleNav = () => {
         setNav(!nav);
@@ -132,8 +135,11 @@ const NavBar2 = () => {
                         <Link to="" className=" text-[#191919] text-xl font-medium">Contact Us</Link>
                     </div>
                     <div className="hidden lg:flex items-center gap-5">
+                        <div className="indicator">
+                            <FaHeart size={25} className='text-[#191919] cursor-pointer ' />
+                            <span className="badge badge-sm indicator-item bg-red-500 text-white rounded-full border-none">{cartItems.length}</span>
+                        </div>
 
-                        <FaHeart size={25} className='text-[#191919] cursor-pointer ' />
 
                         {user ? (
                             <>

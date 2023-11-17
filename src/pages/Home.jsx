@@ -12,6 +12,7 @@ import { FaHeart } from "react-icons/fa";
 import Hero from "../component/Hero";
 import BannerReverse from "../component/BannerReverse";
 import Banner from "../component/Banner";
+import { useCartContext } from "../context/cart_context";
 const Home = () => {
   // const [product, setProduct] = useState(null);
   //get user
@@ -85,6 +86,7 @@ const Home = () => {
 export default Home;
 
 const Product = ({ curElem }) => {
+  const { cartItems, removeItem, addToCart } = useCartContext();
   return (
     <div className="card h-full bg-white w-full shadow-sm rounded-md bg-clip-padding backdrop-filter backdrop-blur-lg  border p-3">
       {/* <div className="flex space-x-2 cursor-pointer items-center mb-3">
@@ -111,9 +113,9 @@ const Product = ({ curElem }) => {
 
         </Link>
         <div className="absolute top-2 right-2">
-          <div className="shadow-sm text-white bg-red-500 hover:bg-red-700  cursor-pointer p-5  rounded-full  relative">
+          <button className="shadow-sm text-white bg-red-500 hover:bg-red-700  cursor-pointer p-5  rounded-full  relative" onClick={() => addToCart(curElem)}>
             <FaHeart className="absolute text-xl font-medium top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 " />
-          </div>
+          </button>
         </div>
       </div>
       <div className="card-data text-black text-xl">
