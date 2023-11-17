@@ -1,0 +1,16 @@
+footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  height: 17rem;
+  background-color: black;
+}
+
+.footer-links {
+  display: flex;
+  gap: 3rem;
+  text-align: center;
+  flex-wrap: wrap;
+  justify-content: center;
+}
