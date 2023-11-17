@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { AiOutlinePlus } from "react-icons/ai";
 import io from 'socket.io-client';
 import CountdownTimer from "./Seller/CountdownTimer";
+import Hero from "../component/Hero";
 const Home = () => {
   // const [product, setProduct] = useState(null);
   //get user
@@ -28,8 +29,9 @@ const Home = () => {
   }, [product]);
   return (
     <div>
+      <Hero />
       <Wrapper>
-        <div className="container py-8 pt-[30vh] mx-auto">
+        <div className="container py-8 mx-auto">
           <div className="bg-gray-100 p-5">
             <div className="grid 2xl:grid-cols-6 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4 ">
               {product?.map((curElem) => (
