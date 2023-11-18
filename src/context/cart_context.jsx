@@ -5,17 +5,17 @@ const CartContext = createContext();
 const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
   const addToCart = (product) => {
-    const exist = cartItems.find((x) => x._id === product._id);
+    const exist = cartItems.find((x) => x?._id === product?._id);
     if (exist) {
       setCartItems(
-        cartItems.map((x) => (x._id === product._id ? { ...exist } : x))
+        cartItems.map((x) => (x?._id === product?._id ? { ...exist } : x))
       );
     } else {
       setCartItems([...cartItems, { ...product }]);
     }
   };
   const removeItem = (product) => {
-    setCartItems(cartItems.filter((x) => x._id !== product._id));
+    setCartItems(cartItems.filter((x) => x?._id !== product?._id));
   };
 
   return (

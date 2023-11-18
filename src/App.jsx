@@ -103,9 +103,9 @@ function App() {
         <Route
           path="/:id"
           element={
-            <ProtectedRoute>
+            <PublicRoute>
               <ProductDetails />
-            </ProtectedRoute>
+            </PublicRoute>
           }
         />
         <Route

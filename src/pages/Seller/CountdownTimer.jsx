@@ -39,7 +39,7 @@ const CountdownTimer = ({ endTime, onCountdownComplete }) => {
     }, []);
 
     return (
-        <div>
+        <div className='text-red-600'>
             {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m {timeLeft.seconds}s
         </div>
     );
