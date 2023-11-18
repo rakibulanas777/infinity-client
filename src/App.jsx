@@ -16,6 +16,7 @@ import Notification from "./pages/Seller/Notification";
 import NavBar2 from "./component/NavBar2";
 import './App.css'
 import Newsletter from "./component/Newsletter";
+import Favorite from "./pages/Favorite";
 
 function App() {
   return (
@@ -34,6 +35,12 @@ function App() {
           path="/home"
           element={
             <Home />
+          }
+        />
+        <Route
+          path="/favorite"
+          element={
+            <Favorite />
           }
         />
 

@@ -78,7 +78,7 @@ const NavBar2 = () => {
         try {
             if (checked) {
                 const res = await axios.put(
-                    `https://infinity-site.onrender.com/api/v1/user/switch-to-user/${user?.user._id}`,
+                    `http://localhost:8000/api/v1/user/switch-to-user/${user?.user._id}`,
                     {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -94,7 +94,7 @@ const NavBar2 = () => {
                 }
             } else {
                 const res = await axios.put(
-                    `https://infinity-site.onrender.com/api/v1/user/switch-to-vendor/${user?.user._id}`,
+                    `http://localhost:8000/api/v1/user/switch-to-vendor/${user?.user._id}`,
                     {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -135,11 +135,12 @@ const NavBar2 = () => {
                         <Link to="" className=" text-[#191919] text-xl font-medium">Contact Us</Link>
                     </div>
                     <div className="hidden lg:flex items-center gap-5">
-                        <div className="indicator">
-                            <FaHeart size={25} className='text-[#191919] cursor-pointer ' />
-                            <span className="badge badge-sm indicator-item bg-red-500 text-white rounded-full border-none">{cartItems.length}</span>
-                        </div>
-
+                        <Link to='/favorite'>
+                            <div className="indicator">
+                                <FaHeart size={25} className='text-[#191919] cursor-pointer ' />
+                                <span className="badge badge-sm indicator-item bg-red-500 text-white rounded-full border-none">{cartItems.length}</span>
+                            </div>
+                        </Link>
 
                         {user ? (
                             <>
