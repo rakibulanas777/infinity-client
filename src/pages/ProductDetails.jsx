@@ -8,6 +8,7 @@ import { message } from "antd";
 import { useUserContext } from "../context/userContext";
 import axios from "axios";
 import CountdownTimer from "./Seller/CountdownTimer";
+import Product from "../component/Product";
 
 const ProductDetails = () => {
   const [productDetails, setProductDetails] = useState(null);
@@ -15,6 +16,7 @@ const ProductDetails = () => {
   const params = useParams();
 
   console.log(user)
+  const [catagoryProduct, setCatagoryProduct] = useState([])
   const getProductsDetails = async () => {
     try {
       const res = await axios.get(`https://infinity-site.onrender.com/api/v1/product/${params.id}`);
@@ -26,8 +28,23 @@ const ProductDetails = () => {
       console.log(error);
     }
   };
+
+  const getCatagoryProducts = async () => {
+    try {
+      const res = await axios.get(`https://infinity-site.onrender.com/api/v1/product/products/category?category=${productDetails?.catagory}`);
+
+      if (res.data.success) {
+        setCatagoryProduct(res.data.data.products);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
   useEffect(() => {
     getProductsDetails();
+    getCatagoryProducts()
   }, []);
 
   const navigate = useNavigate();
@@ -193,6 +210,7 @@ const ProductDetails = () => {
             }
           </div>
         </div>
+
       </div>
     </div>
   );

@@ -1,22 +1,15 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useProductContext } from "../context/productContext";
-
-import { styled } from "styled-components";
-import { Link } from "react-router-dom";
-import { AiOutlinePlus } from "react-icons/ai";
 import Banner1 from "../img/banner/banner1.jpg";
 import Banner2 from "../img/banner/banner2.jpg";
 
 import Hero from "../component/Hero";
 import BannerReverse from "../component/BannerReverse";
 import Banner from "../component/Banner";
-import { useCartContext } from "../context/cart_context";
 import Product from "../component/Product";
-const Home = () => {
-  // const [product, setProduct] = useState(null);
-  //get user
-  const { product, setProduct } = useProductContext();
+const Home = ({ value, setValue, active, setActive }) => {
+
   const [newProduct, setNewProduct] = useState([])
   const [endProduct, setEndProduct] = useState([])
   const [mostBidProduct, setMostBidProduct] = useState([])
@@ -62,7 +55,7 @@ const Home = () => {
 
   return (
     <div>
-      <Hero />
+      <Hero setValue={setValue} value={value} active={active} setActive={setActive} />
       <div className="container py-8 mx-auto">
         <div className="bg-gray-100 p-5 mb-14">
           <div className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-bold text-black py-6">Most bidding products</div>

@@ -17,8 +17,12 @@ import NavBar2 from "./component/NavBar2";
 import './App.css'
 import Newsletter from "./component/Newsletter";
 import Favorite from "./pages/Favorite";
+import ProductPage from "./pages/ProductPage";
+import { useState } from "react";
 
 function App() {
+  const [value, setValue] = useState('all')
+  const [active, setActive] = useState(1);
   return (
     <>
       <NavBar2 />
@@ -27,14 +31,20 @@ function App() {
           path="/"
           element={
             <ProtectedRoute>
-              <Home />
+              <Home setValue={setValue} value={value} active={active} setActive={setActive} />
             </ProtectedRoute>
           }
         />
         <Route
           path="/home"
           element={
-            <Home />
+            <Home setValue={setValue} value={value} active={active} setActive={setActive} />
+          }
+        />
+        <Route
+          path="/product"
+          element={
+            <ProductPage setValue={setValue} value={value} active={active} setActive={setActive} />
           }
         />
         <Route

@@ -131,7 +131,7 @@ const NavBar2 = () => {
                     <div className="items-center hidden lg:flex gap-5">
                         <Link to="" className=" text-[#191919] text-xl font-medium">Home</Link>
                         <Link to="" className=" text-[#191919] text-xl font-medium">Shop</Link>
-                        <Link to="" className=" text-[#191919] text-xl font-medium">Product</Link>
+                        <Link to="/product" className=" text-[#191919] text-xl font-medium">Product</Link>
                         <Link to="" className=" text-[#191919] text-xl font-medium">Contact Us</Link>
                     </div>
                     <div className="hidden lg:flex items-center gap-5">
