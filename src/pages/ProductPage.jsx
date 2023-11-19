@@ -46,7 +46,7 @@ const ProductPage = ({ value, setValue, active, setActive }) => {
     ]
     const getProducts = async () => {
         try {
-            const res = await axios.get(`https://infinity-site.onrender.com/api/v1/product/products/category?category=${value}`);
+            const res = await axios.get(`  https://infinity-site.onrender.com/api/v1/product/products/category?category=${value}`);
 
             if (res.data.success) {
                 setProduct(res.data.data.products);

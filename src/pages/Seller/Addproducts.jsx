@@ -32,7 +32,7 @@ function Addproducts() {
       console.log(end)
       if (user.user.role === 'vendor') {
         const res = await axios.post(
-          "https://infinity-site.onrender.com/api/v1/user/addProducts",
+          "  https://infinity-site.onrender.com/api/v1/user/addProducts",
           {
             ...values,
             vendor: user.user._id,
