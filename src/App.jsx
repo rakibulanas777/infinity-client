@@ -105,17 +105,17 @@ function App() {
         <Route
           path="/allbids/:productId"
           element={
-            <ProtectedRoute>
-              <AllBids />
-            </ProtectedRoute>
+            // <ProtectedRoute>
+            <AllBids />
+            // </ProtectedRoute>
           }
         />
         <Route
           path="/:id"
           element={
-            <PublicRoute>
-              <ProductDetails />
-            </PublicRoute>
+            // <PublicRoute>
+            <ProductDetails />
+            // </PublicRoute>
           }
         />
         <Route

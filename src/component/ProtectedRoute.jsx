@@ -10,7 +10,7 @@ export default function ProtectedRoute({ children }) {
   const getUser = async () => {
     try {
       const res = await axios.post(
-        "  https://infinity-site.onrender.com/api/v1/user/getUserData",
+        "    https://infinity-site.onrender.com/api/v1/user/getUserData",
         { token: localStorage.getItem("token") },
         {
           headers: {

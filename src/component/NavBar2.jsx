@@ -35,6 +35,16 @@ const NavBar2 = () => {
             id: 1,
             path: "/notification",
         },
+        {
+            name: "Orders",
+            id: 2,
+            path: "/oders",
+        },
+        {
+            name: "Inbox",
+            id: 3,
+            path: "/inbox",
+        },
 
     ];
     const navItemSeller = [
@@ -58,6 +68,16 @@ const NavBar2 = () => {
             id: 3,
             path: "/addproducts",
         },
+        {
+            name: "Revenue",
+            id: 4,
+            path: "/revenue",
+        },
+        {
+            name: "Inbox",
+            id: 5,
+            path: "/inbox",
+        },
     ];
     const navItemAdmin = [
         {
@@ -78,7 +98,7 @@ const NavBar2 = () => {
         try {
             if (checked) {
                 const res = await axios.put(
-                    `  https://infinity-site.onrender.com/api/v1/user/switch-to-user/${user?.user._id}`,
+                    `    https://infinity-site.onrender.com/api/v1/user/switch-to-user/${user?.user._id}`,
                     {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -94,7 +114,7 @@ const NavBar2 = () => {
                 }
             } else {
                 const res = await axios.put(
-                    `  https://infinity-site.onrender.com/api/v1/user/switch-to-vendor/${user?.user._id}`,
+                    `    https://infinity-site.onrender.com/api/v1/user/switch-to-vendor/${user?.user._id}`,
                     {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -117,6 +137,10 @@ const NavBar2 = () => {
             message.error("Somthing Went Wrrong ");
         }
     };
+
+
+
+
     return (
         <div className='nav fixed top-0 left-0 w-full z-10 ease-in duration-300 shadow-sm backdrop-blur-md bg-white/80'>
             <div className="container mx-auto py-6 px-10 sm:px-8 md:px-6 lg:px-10">
@@ -134,7 +158,7 @@ const NavBar2 = () => {
                         <Link to="/product" className=" text-[#191919] text-xl font-medium">Product</Link>
                         <Link to="" className=" text-[#191919] text-xl font-medium">Contact Us</Link>
                     </div>
-                    <div className="hidden lg:flex items-center gap-5">
+                    <div className="flex items-center gap-5">
                         <Link to='/favorite'>
                             <div className="indicator">
                                 <FaHeart size={25} className='text-[#191919] cursor-pointer ' />
@@ -257,61 +281,42 @@ const NavBar2 = () => {
       ${nav ? "right-0" : "right-[-100%]"} pt-16 `}
                     >
                         <div className="flex flex-col space-y-8">
-                            {user ? (
-                                <>
-                                    {navItemAdmin.map((item) => (
-                                        <NavLink
-                                            key={item.id}
-                                            to={item.path}
-                                            onClick={() => setActive(item.id)}
-                                            className={
-                                                active === item.id
-                                                    ? "cursor-pointer duration-1000 ease-out text-sm lg:text-base xl:text-base font-medium text-red-700"
-                                                    : "cursor-pointer duration-1000 ease-out text-sm lg:text-base xl:text-base font-medium text-neutral hover:text-red-700"
-                                            }
-                                        >
-                                            {item.name}
-                                        </NavLink>
-                                    ))}
 
-                                    <NavLink to="/profile">
-                                        <div className="cursor-pointer duration-1000 ease-out text-sm lg:text-base xl:text-base font-medium text-neutral">
-                                            {user?.user.name}
-                                        </div>
+                            <>
+                                {navItemAdmin.map((item) => (
+                                    <NavLink
+                                        key={item.id}
+                                        to={item.path}
+                                        onClick={() => setActive(item.id)}
+                                        className={
+                                            active === item.id
+                                                ? "cursor-pointer duration-1000 ease-out text-sm lg:text-base xl:text-base font-medium text-red-700"
+                                                : "cursor-pointer duration-1000 ease-out text-sm lg:text-base xl:text-base font-medium text-neutral hover:text-red-700"
+                                        }
+                                    >
+                                        {item.name}
                                     </NavLink>
+                                ))}
 
-                                    <NavLink to="/notification">
-                                        <div className="cursor-pointer duration-1000 ease-out text-sm lg:text-base xl:text-base font-medium text-neutral">
-                                            notification
-                                        </div>
-                                    </NavLink>
 
-                                    <div>
-                                        <a
-                                            className="cursor-pointer duration-1000 ease-out text-sm lg:text-base xl:text-base font-medium text-neutral"
-                                            onClick={() => {
-                                                message.success("Logout Successfully");
-                                                localStorage.clear();
-                                                navigate("/");
-                                                location.reload();
-                                            }}
-                                        >
-                                            Logout
-                                        </a>
-                                    </div>
-                                </>
-                            ) : (
-                                <div className="flex space-x-4">
-                                    <NavLink to="/login">
-                                        <button>login</button>
-                                    </NavLink>
-                                    <NavLink to="/register">
-                                        <button className="bg-red-500  hover:bg-red-700 mb-3 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                                            Register
-                                        </button>
-                                    </NavLink>
+
+
+
+                                <div>
+                                    <a
+                                        className="cursor-pointer duration-1000 ease-out text-sm lg:text-base xl:text-base font-medium text-neutral"
+                                        onClick={() => {
+                                            message.success("Logout Successfully");
+                                            localStorage.clear();
+                                            navigate("/");
+                                            location.reload();
+                                        }}
+                                    >
+                                        Logout
+                                    </a>
                                 </div>
-                            )}
+                            </>
+
                         </div>
                     </div>
                 </div>
