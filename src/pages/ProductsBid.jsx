@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import { Space, Table, message } from 'antd';
 import { useUserContext } from '../context/userContext';
 
-const ProductBids = ({ vendor, id }) => {
+const ProductBids = ({ vendor, id, setBidID }) => {
     const [bid, setBids] = useState(null);
     const { user, setUser } = useUserContext();
 
@@ -39,7 +39,7 @@ const ProductBids = ({ vendor, id }) => {
         getBids();
     }, [bid]);
 
-
+    console.log(bid)
     // for (let i = 0; i < bid?.length; i++) {
     //     data.push({
     //         key: `${bid[i]._id}`,
@@ -66,6 +66,7 @@ const ProductBids = ({ vendor, id }) => {
 
     const handleApproved = async (bidId) => {
         try {
+            setBidID(bidId)
             const res = await axios.put(
                 `https://infinity-site.onrender.com/api/v1/bids/${bidId}/approve`,
 

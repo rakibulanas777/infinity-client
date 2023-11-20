@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PageNavigation from "../component/PageNavigation";
 import { useProductContext } from "../context/productContext";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import { AiFillClockCircle, AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { useCartContext } from "../context/cart_context";
 import { message } from "antd";
@@ -11,9 +11,10 @@ import CountdownTimer from "./Seller/CountdownTimer";
 import Product from "../component/Product";
 import AllBids from "./Seller/AllBids";
 import ProductBids from "./ProductsBid";
+import { CardElement, Elements, useElements, useStripe } from "@stripe/react-stripe-js";
 
-const ProductDetails = () => {
-  const [productDetails, setProductDetails] = useState(null);
+const ProductDetails = ({ productDetails, setProductDetails }) => {
+
   const { user, setUser } = useUserContext();
   const params = useParams();
 
@@ -110,125 +111,180 @@ const ProductDetails = () => {
   const addFovorite = () => {
     addToCart(productDetails)
   }
+
+  const [bidID, setBidID] = useState(null)
+  const [paymentMethod, setPaymentMethod] = useState('');
+
+
+  const stripe = useStripe();
+  const elements = useElements();
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+
+    const response = await fetch(`https://infinity-site.onrender.com/api/v1/bids/${productDetails?.winningBid}/win-and-pay`, {
+      method: 'POST',
+    });
+    const session = await response.json();
+    console.log(session)
+    // Redirect to Checkout page
+    const result = await stripe.redirectToCheckout({
+      sessionId: session.id,
+    });
+
+    if (result.error) {
+      console.error(result.error.message);
+    }
+  };
+
+  const handlePayment = async () => {
+    try {
+
+      const response = await fetch(`https://infinity-site.onrender.com/api/v1/bids/${productDetails?.winningBid}/win-and-pay`, {
+        method: 'POST',
+      });
+      const session = await response.json();
+      console.log(session)
+      // Redirect to Checkout page
+      const result = await stripe.redirectToCheckout({
+        sessionId: session.id,
+      });
+
+      if (result.error) {
+        console.error(result.error.message);
+      }
+
+    } catch (error) {
+      console.error('Error:', error.message);
+    }
+  };
+
   return (
-    <div>
-      <div className="container mx-auto py-4 px-8 bg-white pt-[20vh]">
-        <PageNavigation title={productDetails?.title} />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 pb-14 gap-8  ">
-          {/* product Images  */}
-          <div>
-            <div className="product_images bg-gray-50/[.04] border rounded mb-5 p-4">
-              <img src={productDetails?.image} className="w-full h-[28rem]" />
-            </div>
 
+    <div className="container mx-auto py-4 px-8 bg-white pt-[20vh]">
+      <PageNavigation title={productDetails?.title} />
+
+      <div className="grid grid-cols-1 md:grid-cols-2 pb-14 gap-8  ">
+        {/* product Images  */}
+        <div>
+          <div className="product_images bg-gray-50/[.04] border rounded mb-5 p-4">
+            <img src={productDetails?.image} className="w-full h-[28rem]" />
           </div>
 
+        </div>
 
+        <div className="product-data border  rounded p-4 text-black mb-5">
+          <div className="text-2xl mb-2 font-semibold text-red-900">
+            {productDetails?.title}
+          </div>
 
-          <div className="product-data border  rounded p-4 text-black mb-5">
-            <div className="text-2xl mb-2 font-semibold text-red-900">
-              {productDetails?.title}
-            </div>
-
-            <div className="text-xl mb-2 font-semibold ">
-              Start Price : <b className="text-red-900">${productDetails?.startPrice}</b>
-            </div>
-            <div className="text-xl mb-2 font-semibold ">
-              Selling Price : <b className="text-red-900">${productDetails?.sellingPrice}</b>
-            </div>
-            {productDetails?.status === 'active' ? (
-              <p className="text-xl">
-                Auction Ends in:{' '}
-                <CountdownTimer endTime={productDetails?.endTime} onCountdownComplete={handleCountdownComplete} />
-              </p>
-            ) : (
-              <p className="text-xl">Winner: {productDetails?.winner?.name}</p>
-            )}
-            <p className="font-medium text-xl flex items-center gap-2 pb-3">
-              <AiFillClockCircle />
-              <span>{productDetails?.createdAt}</span>
+          <div className="text-xl mb-2 font-semibold ">
+            Start Price : <b className="text-red-900">${productDetails?.startPrice}</b>
+          </div>
+          <div className="text-xl mb-2 font-semibold ">
+            Selling Price : <b className="text-red-900">${productDetails?.sellingPrice}</b>
+          </div>
+          {productDetails?.status === 'active' ? (
+            <p className="text-xl">
+              Auction Ends in:{' '}
+              <CountdownTimer endTime={productDetails?.endTime} onCountdownComplete={handleCountdownComplete} />
             </p>
-            <hr />
-            <p className="text-xl mb-2">starting bid</p>
-            {/* <p className="font-semibold  mb-2">${price}</p> */}
-            {
-              user?.user?._id === productDetails?.winner._id ? (<div className="flex flex-col space-y-4"><button
-                type="submit"
+          ) : (
+            <p className="text-xl">Winner: {productDetails?.winner?.name}</p>
+          )}
+          <p className="font-medium text-xl flex items-center gap-2 pb-3">
+            <AiFillClockCircle />
+            <span>{productDetails?.createdAt}</span>
+          </p>
+          <hr />
+          <p className="text-xl mb-2">starting bid</p>
+          {/* <p className="font-semibold  mb-2">${price}</p> */}
+          {
+            user?.user?._id === productDetails?.winner?._id ? (<div className="flex flex-col space-y-4">
+              {/* <Link to="/payment"> */}
+
+              <button
+                onClick={handlePayment}
+
                 className="py-3 text-xl active:scale-90 transition duration-150 transform shadow-md  text-center cursor-pointer px-4 mt-4 rounded bg-red-500 text-white font-medium !w-full"
               >
                 pay ${productDetails?.winningBidAmount}
               </button>
-                <button className="py-3 px-4 mt-4 active:scale-90 transition duration-150 transform rounded border border-red-500 font-medium text-xl w-full" onClick={addFovorite}>
-                  favorite
-                </button></div>) : (<>
-                  {
-                    productDetails?.status === 'ended' ? (<><p className=" font-semibold text-xl text-red-800">This is closed</p></>) : (<><form className="border-b-2 border-gray-100 pb-4" onSubmit={handleOnBids}>
-                      {/* <label
+
+              {/* </Link> */}
+              <button className="py-3 px-4 mt-4 active:scale-90 transition duration-150 transform rounded border border-red-500 font-medium text-xl w-full" onClick={addFovorite}>
+                favorite
+              </button></div>) : (<>
+                {
+                  productDetails?.status === 'ended' ? (<><p className=" font-semibold text-xl text-red-800">This is closed</p></>) : (<><form className="border-b-2 border-gray-100 pb-4" onSubmit={handleOnBids}>
+                    {/* <label
                   htmlFor="offer"
                   type="button"
                   className="py-2 text-center cursor-pointer px-4 mt-4 rounded bg-red-500 text-white font-medium !w-full"
                 >
                   offer
                 </label> */}
-                      <input
-                        type="text"
-                        name="amount"
-                        className="input active:outline-none input-bordered bg-transparent w-full"
-                      />
+                    <input
+                      type="text"
+                      name="amount"
+                      className="input active:outline-none input-bordered bg-transparent w-full"
+                    />
 
-                      <button
-                        type="submit"
-                        className="py-3 text-xl active:scale-90 transition duration-150 transform shadow-md  text-center cursor-pointer px-4 mt-4 rounded bg-red-500 text-white font-medium !w-full"
-                      >
-                        offer
-                      </button>
-                    </form>
-                      <button className="py-3 px-4 mt-4 active:scale-90 transition duration-150 transform rounded border border-red-500 font-medium text-xl w-full" onClick={addFovorite}>
-                        favorite
-                      </button></>)
-                  }
+                    <button
+                      type="submit"
+                      className="py-3 text-xl active:scale-90 transition duration-150 transform shadow-md  text-center cursor-pointer px-4 mt-4 rounded bg-red-500 text-white font-medium !w-full"
+                    >
+                      offer
+                    </button>
+                  </form>
+                    <button className="py-3 px-4 mt-4 active:scale-90 transition duration-150 transform rounded border border-red-500 font-medium text-xl w-full" onClick={addFovorite}>
+                      favorite
+                    </button></>)
+                }
 
-                </>)
-            }
+              </>)
+          }
 
-          </div>
-        </div>
-        <div className="bg-gray-50/[.04] border rounded p-5 mb-10">
-          <div className="text-2xl font-medium text-black cursor-pointer mb-3">
-            Product description
-          </div>
-          <div className="text-xl text-black">
-            {productDetails?.description}
-          </div></div>
-        <div className="grid lg:grid-cols-4 pb-14 md:grid-cols-2 grid-cols-2 gap-8">
-          <div className="bg-gray-500 py-4 cursor-default text-center text-white font-medium px-6 text-xl">
-            Catagory : {
-              productDetails?.catagory
-            }
-          </div>
-          <div className="bg-gray-500 py-4 cursor-pointer text-center text-white font-medium px-6 text-xl">
-            Size: {
-              productDetails?.size
-            }
-          </div>
-          <div className="bg-gray-500 py-4 cursor-pointer text-center text-white font-medium px-6 text-xl">
-            Weight : {
-              productDetails?.weight
-            }
-          </div>
-          <div className="bg-gray-500 py-4 text-center cursor-pointer text-white font-medium px-6 text-xl">
-            Texture : {
-              productDetails?.texture
-            }
-          </div>
-        </div>
-        <div className="bg-gray-100 p-5 mb-14">
-          <div className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-bold text-black py-6">Bids in this product</div>
-          <ProductBids vendor={productDetails?.vendor} id={params.id} />
         </div>
       </div>
+      <div className="bg-gray-50/[.04] border rounded p-5 mb-10">
+        <div className="text-2xl font-medium text-black cursor-pointer mb-3">
+          Product description
+        </div>
+        <div className="text-xl text-black">
+          {productDetails?.description}
+        </div></div>
+      <div className="grid lg:grid-cols-4 pb-14 md:grid-cols-2 grid-cols-2 gap-8">
+        <div className="bg-gray-500 py-4 cursor-default text-center text-white font-medium px-6 text-xl">
+          Catagory : {
+            productDetails?.catagory
+          }
+        </div>
+        <div className="bg-gray-500 py-4 cursor-pointer text-center text-white font-medium px-6 text-xl">
+          Size: {
+            productDetails?.size
+          }
+        </div>
+        <div className="bg-gray-500 py-4 cursor-pointer text-center text-white font-medium px-6 text-xl">
+          Weight : {
+            productDetails?.weight
+          }
+        </div>
+        <div className="bg-gray-500 py-4 text-center cursor-pointer text-white font-medium px-6 text-xl">
+          Texture : {
+            productDetails?.texture
+          }
+        </div>
+      </div>
+      <div className="bg-gray-100 p-5 mb-14">
+        <div className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-bold text-black py-6">Bids in this product</div>
+        <ProductBids vendor={productDetails?.vendor} setBidID={setBidID} id={params.id} />
+      </div>
     </div>
+
+
   );
 };
 

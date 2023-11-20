@@ -20,10 +20,15 @@ import Favorite from "./pages/Favorite";
 import ProductPage from "./pages/ProductPage";
 import { useState } from "react";
 import MyBids from "./pages/user/MyBids";
+import StripeCheckoutButton from "./pages/user/StripeCheckoutButton";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 
 function App() {
   const [value, setValue] = useState('all')
   const [active, setActive] = useState(1);
+  const [productDetails, setProductDetails] = useState(null);
+  const stripePromise = loadStripe('pk_test_51LM2J1SIiDyURhxDNv1N4eG5FI9FdphG6ukPj3hrrSo6UWrgbl6o0nJqOwemWcbqjlKNBR8nqhl6rnfzz8VK2Sjx00y47ErW1D');
   return (
     <>
       <NavBar2 />
@@ -40,6 +45,14 @@ function App() {
           path="/home"
           element={
             <Home setValue={setValue} value={value} active={active} setActive={setActive} />
+          }
+        />
+        <Route
+          path="/payment"
+          element={
+            <Elements stripe={stripePromise}>
+              <StripeCheckoutButton bidId={productDetails?.winningBid} />
+            </Elements>
           }
         />
         <Route
@@ -123,7 +136,9 @@ function App() {
           path="/:id"
           element={
             // <PublicRoute>
-            <ProductDetails />
+            <Elements stripe={stripePromise}>
+              <ProductDetails setProductDetails={setProductDetails} productDetails={productDetails} />
+            </Elements>
             // </PublicRoute>
           }
         />
