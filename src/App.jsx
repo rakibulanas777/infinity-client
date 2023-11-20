@@ -19,6 +19,7 @@ import Newsletter from "./component/Newsletter";
 import Favorite from "./pages/Favorite";
 import ProductPage from "./pages/ProductPage";
 import { useState } from "react";
+import MyBids from "./pages/user/MyBids";
 
 function App() {
   const [value, setValue] = useState('all')
@@ -99,6 +100,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Editproducts />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/mybids"
+          element={
+            <ProtectedRoute>
+              <MyBids />
             </ProtectedRoute>
           }
         />

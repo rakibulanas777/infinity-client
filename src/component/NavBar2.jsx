@@ -36,9 +36,9 @@ const NavBar2 = () => {
             path: "/notification",
         },
         {
-            name: "Orders",
+            name: "My Bids",
             id: 2,
-            path: "/oders",
+            path: "/mybids",
         },
         {
             name: "Inbox",
