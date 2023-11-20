@@ -17,7 +17,6 @@ const ProductDetails = () => {
   const { user, setUser } = useUserContext();
   const params = useParams();
 
-  console.log(user)
   const [catagoryProduct, setCatagoryProduct] = useState([])
   const getProductsDetails = async () => {
     try {
@@ -113,7 +112,7 @@ const ProductDetails = () => {
   }
   return (
     <div>
-      <div className="container mx-auto py-4 px-8 bg-white pt-[15vh]">
+      <div className="container mx-auto py-4 px-8 bg-white pt-[20vh]">
         <PageNavigation title={productDetails?.title} />
 
         <div className="grid grid-cols-1 md:grid-cols-2 pb-14 gap-8  ">
@@ -124,6 +123,7 @@ const ProductDetails = () => {
             </div>
 
           </div>
+
 
 
           <div className="product-data border  rounded p-4 text-black mb-5">
@@ -153,35 +153,46 @@ const ProductDetails = () => {
             <p className="text-xl mb-2">starting bid</p>
             {/* <p className="font-semibold  mb-2">${price}</p> */}
             {
-              productDetails?.status === 'ended' ? (<><p className=" font-semibold text-xl text-red-800">This is closed</p></>) : (<><form className="border-b-2 border-gray-100 pb-4" onSubmit={handleOnBids}>
-                {/* <label
+              user?.user?._id === productDetails?.winner._id ? (<div className="flex flex-col space-y-4"><button
+                type="submit"
+                className="py-3 text-xl active:scale-90 transition duration-150 transform shadow-md  text-center cursor-pointer px-4 mt-4 rounded bg-red-500 text-white font-medium !w-full"
+              >
+                pay ${productDetails?.winningBidAmount}
+              </button>
+                <button className="py-3 px-4 mt-4 active:scale-90 transition duration-150 transform rounded border border-red-500 font-medium text-xl w-full" onClick={addFovorite}>
+                  favorite
+                </button></div>) : (<>
+                  {
+                    productDetails?.status === 'ended' ? (<><p className=" font-semibold text-xl text-red-800">This is closed</p></>) : (<><form className="border-b-2 border-gray-100 pb-4" onSubmit={handleOnBids}>
+                      {/* <label
                   htmlFor="offer"
                   type="button"
                   className="py-2 text-center cursor-pointer px-4 mt-4 rounded bg-red-500 text-white font-medium !w-full"
                 >
                   offer
                 </label> */}
-                <input
-                  type="text"
-                  name="amount"
-                  className="input active:outline-none input-bordered bg-transparent w-full"
-                />
+                      <input
+                        type="text"
+                        name="amount"
+                        className="input active:outline-none input-bordered bg-transparent w-full"
+                      />
 
-                <button
-                  type="submit"
-                  className="py-3 text-xl active:scale-90 transition duration-150 transform shadow-md  text-center cursor-pointer px-4 mt-4 rounded bg-red-500 text-white font-medium !w-full"
-                >
-                  offer
-                </button>
-              </form>
-                <button className="py-3 px-4 mt-4 active:scale-90 transition duration-150 transform rounded border border-red-500 font-medium text-xl w-full" onClick={addFovorite}>
-                  favorite
-                </button></>)
+                      <button
+                        type="submit"
+                        className="py-3 text-xl active:scale-90 transition duration-150 transform shadow-md  text-center cursor-pointer px-4 mt-4 rounded bg-red-500 text-white font-medium !w-full"
+                      >
+                        offer
+                      </button>
+                    </form>
+                      <button className="py-3 px-4 mt-4 active:scale-90 transition duration-150 transform rounded border border-red-500 font-medium text-xl w-full" onClick={addFovorite}>
+                        favorite
+                      </button></>)
+                  }
+
+                </>)
             }
+
           </div>
-
-
-
         </div>
         <div className="bg-gray-50/[.04] border rounded p-5 mb-10">
           <div className="text-2xl font-medium text-black cursor-pointer mb-3">
@@ -214,7 +225,7 @@ const ProductDetails = () => {
         </div>
         <div className="bg-gray-100 p-5 mb-14">
           <div className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-bold text-black py-6">Bids in this product</div>
-          <ProductBids id={params.id} />
+          <ProductBids vendor={productDetails?.vendor} id={params.id} />
         </div>
       </div>
     </div>

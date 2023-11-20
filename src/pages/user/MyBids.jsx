@@ -28,9 +28,14 @@ const MyBids = () => {
         },
 
         {
-            id: 3,
+            id: 2,
             name: 'Closed',
             value: 'ended'
+        },
+        {
+            id: 3,
+            name: 'Winning ',
+            value: 'winproduct'
         }
     ]
     const handleBtnValue = (elm) => {
@@ -90,7 +95,8 @@ const MyBids = () => {
 export default MyBids;
 
 const Product = ({ curElem }) => {
-    console.log(curElem);
+
+    const { user } = useUserContext();
     const { getProductDetails } = useProductContext();
     const { cartItems, removeItem, addToCart } = useCartContext();
 

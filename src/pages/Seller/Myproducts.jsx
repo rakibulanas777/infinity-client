@@ -177,9 +177,9 @@ const Product = ({ curElem }) => {
       </div> */}
       <div className="relative mb-3">
 
-
-        <img src={curElem.image} alt={curElem.title} />
-
+        <Link to={`/${curElem._id}`}>
+          <img src={curElem.image} alt={curElem.title} />
+        </Link>
 
         <div className="absolute top-0 left-2">
           <details className="dropdown z-10">

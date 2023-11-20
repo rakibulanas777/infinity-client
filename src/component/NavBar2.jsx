@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Form, Link, NavLink, useNavigate } from "react-router-dom"
+import React, { useEffect, useState } from 'react'
+import { Form, Link, NavLink, Navigate, useNavigate } from "react-router-dom"
 import { FaUserCircle } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
 import { Switch, message } from 'antd';
@@ -138,7 +138,34 @@ const NavBar2 = () => {
         }
     };
 
+    const getUser = async () => {
+        try {
+            const res = await axios.post(
+                "https://infinity-site.onrender.com/api/v1/user/getUserData",
+                { token: localStorage.getItem("token") },
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    },
+                }
+            );
 
+            if (res.data.success) {
+                setUser(res.data.data);
+            } else {
+                <Navigate to="/home" />;
+                localStorage.clear();
+            }
+        } catch (error) {
+            // localStorage.clear();
+            console.log(error);
+        }
+    };
+    useEffect(() => {
+        if (!user) {
+            getUser();
+        }
+    }, [user]);
 
 
     return (
