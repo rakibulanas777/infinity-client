@@ -28,7 +28,7 @@ function Editproducts() {
   const handleFinish = async (values) => {
     try {
       const res = await axios.put(
-        `    https://infinity-site.onrender.com/api/v1/product/${productDetails._id}`,
+        `     https://infinity-site.onrender.com/api/v1/product/${productDetails._id}`,
         {
           ...values,
         },

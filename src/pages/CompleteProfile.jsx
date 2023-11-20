@@ -11,7 +11,7 @@ const CompleteProfile = () => {
 
 
             const res = await axios.put(
-                "    https://infinity-site.onrender.com/api/v1/user/complete-profile",
+                "     https://infinity-site.onrender.com/api/v1/user/complete-profile",
                 {
                     ...values,
                     userId: user.user._id,
@@ -38,6 +38,7 @@ const CompleteProfile = () => {
 
             if (res.data.success) {
                 message.success(res.data.message);
+                location.reload();
             } else {
                 message.error(res.data.message);
             }
@@ -47,6 +48,7 @@ const CompleteProfile = () => {
             message.error("Somthing Went Wrrong ");
         }
     };
+
     return (
         <div>
             <div className="w-full mx-auto pt-[30vh]">

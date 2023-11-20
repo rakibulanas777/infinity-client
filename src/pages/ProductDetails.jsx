@@ -9,6 +9,8 @@ import { useUserContext } from "../context/userContext";
 import axios from "axios";
 import CountdownTimer from "./Seller/CountdownTimer";
 import Product from "../component/Product";
+import AllBids from "./Seller/AllBids";
+import ProductBids from "./ProductsBid";
 
 const ProductDetails = () => {
   const [productDetails, setProductDetails] = useState(null);
@@ -19,7 +21,7 @@ const ProductDetails = () => {
   const [catagoryProduct, setCatagoryProduct] = useState([])
   const getProductsDetails = async () => {
     try {
-      const res = await axios.get(`    https://infinity-site.onrender.com/api/v1/product/${params.id}`);
+      const res = await axios.get(`     https://infinity-site.onrender.com/api/v1/product/${params.id}`);
 
       if (res.data.success) {
         setProductDetails(res.data.data.product);
@@ -31,7 +33,7 @@ const ProductDetails = () => {
 
   const getCatagoryProducts = async () => {
     try {
-      const res = await axios.get(`    https://infinity-site.onrender.com/api/v1/product/products/category?category=${productDetails?.catagory}`);
+      const res = await axios.get(`     https://infinity-site.onrender.com/api/v1/product/products/category?category=${productDetails?.catagory}`);
 
       if (res.data.success) {
         setCatagoryProduct(res.data.data.products);
@@ -58,10 +60,10 @@ const ProductDetails = () => {
       }
       if (!user.user.bankAccount) {
         message.error('Please provide your bank account information.');
-        return <Navigate to="/complete-profile" />;
+        return navigate("/complete-profile");
       }
       const res = await axios.post(
-        `    https://infinity-site.onrender.com/api/v1/bids/${params.id}`,
+        `     https://infinity-site.onrender.com/api/v1/bids/${params.id}`,
         {
           vendor: productDetails.vendor,
           userId: user.user._id,
@@ -87,7 +89,7 @@ const ProductDetails = () => {
   const handleCountdownComplete = async () => {
     try {
       if (!winnerSelected) {
-        const response = await axios.patch(`    https://infinity-site.onrender.com/api/v1/product/${params.id}/select-winner`, {
+        const response = await axios.patch(`https://infinity-site.onrender.com/api/v1/product/${params.id}/select-winner`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -210,7 +212,10 @@ const ProductDetails = () => {
             }
           </div>
         </div>
-
+        <div className="bg-gray-100 p-5 mb-14">
+          <div className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-bold text-black py-6">Bids in this product</div>
+          <ProductBids id={params.id} />
+        </div>
       </div>
     </div>
   );

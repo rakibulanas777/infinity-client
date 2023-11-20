@@ -43,7 +43,7 @@ const Myproducts = () => {
   const getProducts = async () => {
     try {
       const res = await axios.get(
-        `    https://infinity-site.onrender.com/api/v1/product/vendor/${params.vendorId}?status=${value.value}`,
+        `     https://infinity-site.onrender.com/api/v1/product/vendor/${params.vendorId}?status=${value.value}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -96,7 +96,7 @@ const Product = ({ curElem }) => {
   const { getProductDetails } = useProductContext();
   const handleDelete = (id) => {
     alert("are you sure procesd");
-    fetch(`    https://infinity-site.onrender.com/api/v1/product/${id}`, {
+    fetch(`     https://infinity-site.onrender.com/api/v1/product/${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json()) // or res.json()
@@ -107,7 +107,7 @@ const Product = ({ curElem }) => {
   };
   const navigate = useNavigate();
   const handleEdit = (id) => {
-    fetch(`    https://infinity-site.onrender.com/api/v1/product/${id}`)
+    fetch(`     https://infinity-site.onrender.com/api/v1/product/${id}`)
       .then((res) => res.json()) // or res.json()
       .then((data) => {
         getProductDetails(data.data.product);
@@ -117,7 +117,7 @@ const Product = ({ curElem }) => {
   const handlePause = async (id) => {
     try {
       const res = await axios.put(
-        `    https://infinity-site.onrender.com/api/v1/product/pause/${id}`,
+        `     https://infinity-site.onrender.com/api/v1/product/pause/${id}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -138,7 +138,7 @@ const Product = ({ curElem }) => {
   const handleActive = async (id) => {
     try {
       const res = await axios.put(
-        `    https://infinity-site.onrender.com/api/v1/product/active/${id}`,
+        `     https://infinity-site.onrender.com/api/v1/product/active/${id}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,

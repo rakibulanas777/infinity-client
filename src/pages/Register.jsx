@@ -7,7 +7,7 @@ const Register = () => {
   const handleOnSubmit = (values) => {
     const userData = { ...values };
 
-    fetch("    https://infinity-site.onrender.com/api/v1/user/register", {
+    fetch("     https://infinity-site.onrender.com/api/v1/user/register", {
       method: "POST",
       headers: {
         "content-type": "application/json",
