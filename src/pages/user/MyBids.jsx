@@ -36,6 +36,11 @@ const MyBids = () => {
             id: 3,
             name: 'Winning ',
             value: 'winproduct'
+        },
+        {
+            id: 4,
+            name: 'Complete',
+            value: 'complete'
         }
     ]
     const handleBtnValue = (elm) => {

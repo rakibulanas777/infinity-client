@@ -23,6 +23,7 @@ import MyBids from "./pages/user/MyBids";
 import StripeCheckoutButton from "./pages/user/StripeCheckoutButton";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import Revenue from "./pages/Seller/Revenue";
 
 function App() {
   const [value, setValue] = useState('all')
@@ -147,6 +148,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Myproducts />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/revenue/:vendorId"
+          element={
+            <ProtectedRoute>
+              <Revenue />
             </ProtectedRoute>
           }
         />

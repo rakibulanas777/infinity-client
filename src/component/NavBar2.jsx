@@ -71,7 +71,7 @@ const NavBar2 = () => {
         {
             name: "Revenue",
             id: 4,
-            path: "/revenue",
+            path: `/revenue/${user?.user._id}`,
         },
         {
             name: "Inbox",

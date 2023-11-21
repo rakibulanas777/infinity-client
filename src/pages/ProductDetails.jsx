@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import PageNavigation from "../component/PageNavigation";
 import { useProductContext } from "../context/productContext";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
-import { AiFillClockCircle, AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
+import {
+  AiFillClockCircle,
+  AiOutlineMinus,
+  AiOutlinePlus,
+} from "react-icons/ai";
 import { useCartContext } from "../context/cart_context";
 import { message } from "antd";
 import { useUserContext } from "../context/userContext";
@@ -11,17 +15,23 @@ import CountdownTimer from "./Seller/CountdownTimer";
 import Product from "../component/Product";
 import AllBids from "./Seller/AllBids";
 import ProductBids from "./ProductsBid";
-import { CardElement, Elements, useElements, useStripe } from "@stripe/react-stripe-js";
+import {
+  CardElement,
+  Elements,
+  useElements,
+  useStripe,
+} from "@stripe/react-stripe-js";
 
 const ProductDetails = ({ productDetails, setProductDetails }) => {
-
   const { user, setUser } = useUserContext();
   const params = useParams();
 
-  const [catagoryProduct, setCatagoryProduct] = useState([])
+  const [catagoryProduct, setCatagoryProduct] = useState([]);
   const getProductsDetails = async () => {
     try {
-      const res = await axios.get(`     https://infinity-site.onrender.com/api/v1/product/${params.id}`);
+      const res = await axios.get(
+        `     https://infinity-site.onrender.com/api/v1/product/${params.id}`
+      );
 
       if (res.data.success) {
         setProductDetails(res.data.data.product);
@@ -33,7 +43,9 @@ const ProductDetails = ({ productDetails, setProductDetails }) => {
 
   const getCatagoryProducts = async () => {
     try {
-      const res = await axios.get(`     https://infinity-site.onrender.com/api/v1/product/products/category?category=${productDetails?.catagory}`);
+      const res = await axios.get(
+        `     https://infinity-site.onrender.com/api/v1/product/products/category?category=${productDetails?.catagory}`
+      );
 
       if (res.data.success) {
         setCatagoryProduct(res.data.data.products);
@@ -43,23 +55,21 @@ const ProductDetails = ({ productDetails, setProductDetails }) => {
     }
   };
 
-
   useEffect(() => {
     getProductsDetails();
-    getCatagoryProducts()
+    getCatagoryProducts();
   }, []);
 
   const navigate = useNavigate();
   const handleOnBids = async (e) => {
     try {
-
       e.preventDefault();
 
       if (user === null) {
         return navigate("/login");
       }
       if (!user.user.bankAccount) {
-        message.error('Please provide your bank account information.');
+        message.error("Please provide your bank account information.");
         return navigate("/complete-profile");
       }
       const res = await axios.post(
@@ -77,9 +87,7 @@ const ProductDetails = ({ productDetails, setProductDetails }) => {
       );
 
       message.success(res.data.message);
-
     } catch (error) {
-
       console.log(error);
     }
   };
@@ -89,32 +97,33 @@ const ProductDetails = ({ productDetails, setProductDetails }) => {
   const handleCountdownComplete = async () => {
     try {
       if (!winnerSelected) {
-        const response = await axios.patch(`https://infinity-site.onrender.com/api/v1/product/${params.id}/select-winner`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
+        const response = await axios.patch(
+          `https://infinity-site.onrender.com/api/v1/product/${params.id}/select-winner`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
         if (response.status === 200) {
-          message.success('Winner selected successfully');
+          message.success("Winner selected successfully");
           setWinnerSelected(true);
           // Update UI or perform any necessary actions
         }
       }
     } catch (error) {
-      console.error('Error selecting winner:', error);
+      console.error("Error selecting winner:", error);
     }
   };
 
-
   const { cartItems, removeItem, addToCart } = useCartContext();
-  console.log(productDetails)
+  console.log(productDetails);
   const addFovorite = () => {
-    addToCart(productDetails)
-  }
+    addToCart(productDetails);
+  };
 
-  const [bidID, setBidID] = useState(null)
-  const [paymentMethod, setPaymentMethod] = useState('');
-
+  const [bidID, setBidID] = useState(null);
+  const [paymentMethod, setPaymentMethod] = useState("");
 
   const stripe = useStripe();
   const elements = useElements();
@@ -122,12 +131,14 @@ const ProductDetails = ({ productDetails, setProductDetails }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-
-    const response = await fetch(`https://infinity-site.onrender.com/api/v1/bids/${productDetails?.winningBid}/win-and-pay`, {
-      method: 'POST',
-    });
+    const response = await fetch(
+      `https://infinity-site.onrender.com/api/v1/bids/${productDetails?.winningBid}/win-and-pay`,
+      {
+        method: "POST",
+      }
+    );
     const session = await response.json();
-    console.log(session)
+    console.log(session);
     // Redirect to Checkout page
     const result = await stripe.redirectToCheckout({
       sessionId: session.id,
@@ -140,12 +151,14 @@ const ProductDetails = ({ productDetails, setProductDetails }) => {
 
   const handlePayment = async () => {
     try {
-
-      const response = await fetch(`https://infinity-site.onrender.com/api/v1/bids/${productDetails?.winningBid}/win-and-pay`, {
-        method: 'POST',
-      });
+      const response = await fetch(
+        `https://infinity-site.onrender.com/api/v1/bids/${productDetails?.winningBid}/win-and-pay`,
+        {
+          method: "POST",
+        }
+      );
       const session = await response.json();
-      console.log(session)
+      console.log(session);
       // Redirect to Checkout page
       const result = await stripe.redirectToCheckout({
         sessionId: session.id,
@@ -154,15 +167,12 @@ const ProductDetails = ({ productDetails, setProductDetails }) => {
       if (result.error) {
         console.error(result.error.message);
       }
-
     } catch (error) {
-      console.error('Error:', error.message);
+      console.error("Error:", error.message);
     }
   };
 
   return (
-
-
     <div className="container mx-auto py-4 px-8 bg-white pt-[20vh]">
       <PageNavigation title={productDetails?.title} />
 
@@ -172,7 +182,6 @@ const ProductDetails = ({ productDetails, setProductDetails }) => {
           <div className="product_images bg-gray-50/[.04] border rounded mb-5 p-4">
             <img src={productDetails?.image} className="w-full h-[28rem]" />
           </div>
-
         </div>
 
         <div className="product-data border  rounded p-4 text-black mb-5">
@@ -181,15 +190,20 @@ const ProductDetails = ({ productDetails, setProductDetails }) => {
           </div>
 
           <div className="text-xl mb-2 font-semibold ">
-            Start Price : <b className="text-red-900">${productDetails?.startPrice}</b>
+            Start Price :{" "}
+            <b className="text-red-900">${productDetails?.startPrice}</b>
           </div>
           <div className="text-xl mb-2 font-semibold ">
-            Selling Price : <b className="text-red-900">${productDetails?.sellingPrice}</b>
+            Selling Price :{" "}
+            <b className="text-red-900">${productDetails?.sellingPrice}</b>
           </div>
-          {productDetails?.status === 'active' ? (
+          {productDetails?.status === "active" ? (
             <p className="text-xl">
-              Auction Ends in:{' '}
-              <CountdownTimer endTime={productDetails?.endTime} onCountdownComplete={handleCountdownComplete} />
+              Auction Ends in:{" "}
+              <CountdownTimer
+                endTime={productDetails?.endTime}
+                onCountdownComplete={handleCountdownComplete}
+              />
             </p>
           ) : (
             <p className="text-xl">Winner: {productDetails?.winner?.name}</p>
@@ -201,24 +215,39 @@ const ProductDetails = ({ productDetails, setProductDetails }) => {
           <hr />
           <p className="text-xl mb-2">starting bid</p>
           {/* <p className="font-semibold  mb-2">${price}</p> */}
-          {
-            user?.user?._id === productDetails?.winner?._id ? (<div className="flex flex-col space-y-4">
+          {user?.user?._id === productDetails?.winner?._id ? (
+            <div className="flex flex-col space-y-4">
               {/* <Link to="/payment"> */}
 
               <button
                 onClick={handlePayment}
-
                 className="py-3 text-xl active:scale-90 transition duration-150 transform shadow-md  text-center cursor-pointer px-4 mt-4 rounded bg-red-500 text-white font-medium !w-full"
               >
                 pay ${productDetails?.winningBidAmount}
               </button>
 
               {/* </Link> */}
-              <button className="py-3 px-4 mt-4 active:scale-90 transition duration-150 transform rounded border border-red-500 font-medium text-xl w-full" onClick={addFovorite}>
+              <button
+                className="py-3 px-4 mt-4 active:scale-90 transition duration-150 transform rounded border border-red-500 font-medium text-xl w-full"
+                onClick={addFovorite}
+              >
                 favorite
-              </button></div>) : (<>
-                {
-                  productDetails?.status === 'ended' ? (<><p className=" font-semibold text-xl text-red-800">This is closed</p></>) : (<><form className="border-b-2 border-gray-100 pb-4" onSubmit={handleOnBids}>
+              </button>
+            </div>
+          ) : (
+            <>
+              {productDetails?.status === "ended" ? (
+                <>
+                  <p className=" font-semibold text-xl text-red-800">
+                    This is closed
+                  </p>
+                </>
+              ) : (
+                <>
+                  <form
+                    className="border-b-2 border-gray-100 pb-4"
+                    onSubmit={handleOnBids}
+                  >
                     {/* <label
                   htmlFor="offer"
                   type="button"
@@ -239,52 +268,49 @@ const ProductDetails = ({ productDetails, setProductDetails }) => {
                       offer
                     </button>
                   </form>
-                    <button className="py-3 px-4 mt-4 active:scale-90 transition duration-150 transform rounded border border-red-500 font-medium text-xl w-full" onClick={addFovorite}>
-                      favorite
-                    </button></>)
-                }
-
-              </>)
-          }
-
+                  <button
+                    className="py-3 px-4 mt-4 active:scale-90 transition duration-150 transform rounded border border-red-500 font-medium text-xl w-full"
+                    onClick={addFovorite}
+                  >
+                    favorite
+                  </button>
+                </>
+              )}
+            </>
+          )}
         </div>
       </div>
       <div className="bg-gray-50/[.04] border rounded p-5 mb-10">
         <div className="text-2xl font-medium text-black cursor-pointer mb-3">
           Product description
         </div>
-        <div className="text-xl text-black">
-          {productDetails?.description}
-        </div></div>
+        <div className="text-xl text-black">{productDetails?.description}</div>
+      </div>
       <div className="grid lg:grid-cols-4 pb-14 md:grid-cols-2 grid-cols-2 gap-8">
         <div className="bg-gray-500 py-4 cursor-default text-center text-white font-medium px-6 text-xl">
-          Catagory : {
-            productDetails?.catagory
-          }
+          Catagory : {productDetails?.catagory}
         </div>
         <div className="bg-gray-500 py-4 cursor-pointer text-center text-white font-medium px-6 text-xl">
-          Size: {
-            productDetails?.size
-          }
+          Size: {productDetails?.size}
         </div>
         <div className="bg-gray-500 py-4 cursor-pointer text-center text-white font-medium px-6 text-xl">
-          Weight : {
-            productDetails?.weight
-          }
+          Weight : {productDetails?.weight}
         </div>
         <div className="bg-gray-500 py-4 text-center cursor-pointer text-white font-medium px-6 text-xl">
-          Texture : {
-            productDetails?.texture
-          }
+          Texture : {productDetails?.texture}
         </div>
       </div>
       <div className="bg-gray-100 p-5 mb-14">
-        <div className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-bold text-black py-6">Bids in this product</div>
-        <ProductBids vendor={productDetails?.vendor} setBidID={setBidID} id={params.id} />
+        <div className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-bold text-black py-6">
+          Bids in this product
+        </div>
+        <ProductBids
+          vendor={productDetails?.vendor}
+          setBidID={setBidID}
+          id={params.id}
+        />
       </div>
     </div>
-
-
   );
 };
 

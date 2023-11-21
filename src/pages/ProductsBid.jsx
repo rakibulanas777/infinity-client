@@ -13,7 +13,7 @@ const ProductBids = ({ vendor, id, setBidID }) => {
     const getBids = async () => {
         try {
             const res = await axios.get(
-                `     https://infinity-site.onrender.com/api/v1/bids/product/${id}/bid`,
+                `https://infinity-site.onrender.com/api/v1/bids/product/${id}/bid`,
 
                 {
                     headers: {

@@ -33,6 +33,16 @@ const Myproducts = () => {
       id: 3,
       name: 'Closed',
       value: 'ended'
+    },
+    {
+      id: 4,
+      name: 'Paid',
+      value: 'paid'
+    },
+    {
+      id: 5,
+      name: 'Delivered',
+      value: 'delivered'
     }
   ]
   const handleBtnValue = (elm) => {
@@ -72,7 +82,7 @@ const Myproducts = () => {
       <div className="container py-8 pt-[15vh] mx-auto">
         <div className="bg-gray-100 p-5">
           <div className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-bold text-black py-6">My products</div>
-          <div className="flex gap-8 items-center mb-8">
+          <div className="flex gap-8 flex-wrap items-center mb-8">
 
             {buttonData?.map((curElem) => (
               <button className={active === curElem.id ? "text-xl px-4 py-3 text-white bg-black border-black border-2 rounded-sm  justify-center" : "text-xl px-4 py-3 text-black border-black border-2 rounded-sm  justify-center"} onClick={() => handleBtnValue(curElem)}>{curElem.name}</button>
@@ -96,7 +106,7 @@ const Product = ({ curElem }) => {
   const { getProductDetails } = useProductContext();
   const handleDelete = (id) => {
     alert("are you sure procesd");
-    fetch(`     https://infinity-site.onrender.com/api/v1/product/${id}`, {
+    fetch(`https://infinity-site.onrender.com/api/v1/product/${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json()) // or res.json()
@@ -107,7 +117,7 @@ const Product = ({ curElem }) => {
   };
   const navigate = useNavigate();
   const handleEdit = (id) => {
-    fetch(`     https://infinity-site.onrender.com/api/v1/product/${id}`)
+    fetch(`https://infinity-site.onrender.com/api/v1/product/${id}`)
       .then((res) => res.json()) // or res.json()
       .then((data) => {
         getProductDetails(data.data.product);
