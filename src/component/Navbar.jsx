@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Form, Link, NavLink, useNavigate } from "react-router-dom";
 import { AiOutlineCloseCircle } from "react-icons/ai";
+import { motion } from "framer-motion"
 import { HiMenu } from "react-icons/hi";
 import { Switch, message } from "antd";
 import {
@@ -210,8 +211,8 @@ const Navbar = () => {
                               onClick={() => setActive(item.id)}
                               className={
                                 active === item.id
-                                  ? "cursor-pointer duration-1000 p-2 ease-out text-sm lg:text-base xl:text-base font-medium text-primary"
-                                  : "cursor-pointer duration-1000 p-2 ease-out text-sm lg:text-base xl:text-base font-medium text-neutral hover:text-primary"
+                                  ? "cursor-pointer duration-1000 p-2 ease-out text-sm lg:text-base xl:text-base font-medium text-red-500"
+                                  : "cursor-pointer duration-1000 p-2 ease-out text-sm lg:text-base xl:text-base font-medium text-primary hover:text-primary"
                               }
                             >
                               {item.name}
@@ -238,7 +239,7 @@ const Navbar = () => {
                               onClick={() => setActive(item.id)}
                               className={
                                 active === item.id
-                                  ? "cursor-pointer duration-1000 ease-out text-sm lg:text-base xl:text-base font-medium text-primary"
+                                  ? "cursor-pointer duration-1000 ease-out text-sm lg:text-base xl:text-base font-medium text-red-500"
                                   : "cursor-pointer duration-1000 ease-out text-sm lg:text-base xl:text-base font-medium text-neutral hover:text-primary"
                               }
                             >

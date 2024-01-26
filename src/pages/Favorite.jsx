@@ -53,6 +53,7 @@ const Favorite = () => {
 export default Favorite;
 
 const FavoriteProducts = ({ product, removeItem }) => {
+    console.log(product)
     return (
         <div className="flex items-center text-xl hover:bg-gray-100 -mx-8 px-6 py-5">
             <div className="flex w-2/5">

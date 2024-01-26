@@ -47,6 +47,31 @@ const NavBar2 = () => {
         },
 
     ];
+    const item = [
+        {
+            name: "Home",
+            id: 0,
+            path: "/",
+        },
+        {
+            name: "Shop",
+            id: 1,
+            path: "/shop",
+        },
+        {
+            name: "Product",
+            id: 2,
+            path: "/product",
+        },
+        {
+            name: "Contact Us",
+            id: 3,
+            path: "/contact",
+        },
+
+    ];
+
+
     const navItemSeller = [
         {
             name: "Profile",
@@ -180,10 +205,26 @@ const NavBar2 = () => {
                     </Link>
 
                     <div className="items-center hidden lg:flex gap-5">
-                        <Link to="" className=" text-[#191919] text-xl font-medium">Home</Link>
-                        <Link to="" className=" text-[#191919] text-xl font-medium">Shop</Link>
-                        <Link to="/product" className=" text-[#191919] text-xl font-medium">Product</Link>
-                        <Link to="" className=" text-[#191919] text-xl font-medium">Contact Us</Link>
+                        {item.map((item) => (
+
+                            <NavLink
+                                key={item.id}
+                                to={item.path}
+                                onClick={() => {
+                                    setActive(item.id)
+                                    window.scrollTo(0, 0)
+                                }}
+                                className={
+                                    active === item.id
+                                        ? "text-red-500 hover:text-red-500 text-xl font-medium"
+                                        : "text-[#191919] hover:text-red-500 text-xl font-medium"
+                                }
+                            >
+                                {item.name}
+                            </NavLink>
+
+                        ))}
+
                     </div>
                     <div className="flex items-center gap-5">
                         <Link to='/favorite'>
@@ -310,11 +351,14 @@ const NavBar2 = () => {
                         <div className="flex flex-col space-y-8">
 
                             <>
-                                {navItemAdmin.map((item) => (
+                                {item.map((item) => (
                                     <NavLink
                                         key={item.id}
                                         to={item.path}
-                                        onClick={() => setActive(item.id)}
+                                        onClick={() => {
+                                            setActive(item.id)
+                                            window.scrollTo(0, 0)
+                                        }}
                                         className={
                                             active === item.id
                                                 ? "cursor-pointer duration-1000 ease-out text-sm lg:text-base xl:text-base font-medium text-red-700"

@@ -39,7 +39,6 @@ const ProductBids = ({ vendor, id, setBidID }) => {
         getBids();
     }, [bid]);
 
-    console.log(bid)
     // for (let i = 0; i < bid?.length; i++) {
     //     data.push({
     //         key: `${bid[i]._id}`,

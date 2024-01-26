@@ -24,6 +24,8 @@ import StripeCheckoutButton from "./pages/user/StripeCheckoutButton";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import Revenue from "./pages/Seller/Revenue";
+import Success from "./pages/Success";
+import Shop from "./pages/Shop";
 
 function App() {
   const [value, setValue] = useState('all')
@@ -66,6 +68,12 @@ function App() {
           path="/favorite"
           element={
             <Favorite />
+          }
+        />
+        <Route
+          path="/shop"
+          element={
+            <Shop />
           }
         />
 
@@ -156,6 +164,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Revenue />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/sucess"
+          element={
+            <ProtectedRoute>
+              < Success />
             </ProtectedRoute>
           }
         />

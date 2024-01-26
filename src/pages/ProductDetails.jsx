@@ -60,6 +60,7 @@ const ProductDetails = ({ productDetails, setProductDetails }) => {
     getCatagoryProducts();
   }, []);
 
+
   const navigate = useNavigate();
   const handleOnBids = async (e) => {
     try {
@@ -77,7 +78,7 @@ const ProductDetails = ({ productDetails, setProductDetails }) => {
         {
           vendor: productDetails.vendor,
           userId: user.user._id,
-          amount: e.target.amount.value,
+          amount: amount,
         },
         {
           headers: {
@@ -117,7 +118,7 @@ const ProductDetails = ({ productDetails, setProductDetails }) => {
   };
 
   const { cartItems, removeItem, addToCart } = useCartContext();
-  console.log(productDetails);
+
   const addFovorite = () => {
     addToCart(productDetails);
   };
@@ -138,7 +139,7 @@ const ProductDetails = ({ productDetails, setProductDetails }) => {
       }
     );
     const session = await response.json();
-    console.log(session);
+
     // Redirect to Checkout page
     const result = await stripe.redirectToCheckout({
       sessionId: session.id,
@@ -171,6 +172,30 @@ const ProductDetails = ({ productDetails, setProductDetails }) => {
       console.error("Error:", error.message);
     }
   };
+
+
+  const initialAmount = productDetails && productDetails.startPrice ? productDetails.startPrice : 0;
+
+
+  const [amount, setAmount] = useState(initialAmount);
+
+  console.log(amount);
+
+  const handleDecrease = (p) => {
+    console.log(p);
+    if (amount > p) {
+      setAmount(amount - 1);
+    } else {
+      setAmount(amount);
+    }
+  };
+
+  const handleIncrease = (p) => {
+    setAmount(amount + 1);
+  };
+
+  console.log(amount);
+
 
   return (
     <div className="container mx-auto py-4 px-8 bg-white pt-[20vh]">
@@ -215,69 +240,104 @@ const ProductDetails = ({ productDetails, setProductDetails }) => {
           <hr />
           <p className="text-xl mb-2">starting bid</p>
           {/* <p className="font-semibold  mb-2">${price}</p> */}
-          {user?.user?._id === productDetails?.winner?._id ? (
-            <div className="flex flex-col space-y-4">
-              {/* <Link to="/payment"> */}
+          {
+            productDetails?.status === "ended" ? (<><p className=" font-semibold text-xl text-red-800">
+              This is closed
+            </p></>) : (user ? (user?.user?._id === productDetails?.winner?._id ? (
+              <div className="flex flex-col space-y-4">
+                {/* <Link to="/payment"> */}
 
-              <button
-                onClick={handlePayment}
-                className="py-3 text-xl active:scale-90 transition duration-150 transform shadow-md  text-center cursor-pointer px-4 mt-4 rounded bg-red-500 text-white font-medium !w-full"
-              >
-                pay ${productDetails?.winningBidAmount}
-              </button>
+                <button
+                  onClick={handlePayment}
+                  className="py-3 text-xl active:scale-90 transition duration-150 transform shadow-md  text-center cursor-pointer px-4 mt-4 rounded bg-red-500 text-white font-medium !w-full"
+                >
+                  pay ${productDetails?.winningBidAmount}
+                </button>
 
-              {/* </Link> */}
-              <button
-                className="py-3 px-4 mt-4 active:scale-90 transition duration-150 transform rounded border border-red-500 font-medium text-xl w-full"
-                onClick={addFovorite}
-              >
-                favorite
-              </button>
-            </div>
-          ) : (
-            <>
-              {productDetails?.status === "ended" ? (
-                <>
-                  <p className=" font-semibold text-xl text-red-800">
-                    This is closed
-                  </p>
-                </>
-              ) : (
-                <>
-                  <form
-                    className="border-b-2 border-gray-100 pb-4"
-                    onSubmit={handleOnBids}
-                  >
-                    {/* <label
+                {/* </Link> */}
+                <button
+                  className="py-3 px-4 mt-4 active:scale-90 transition duration-150 transform rounded border border-red-500 font-medium text-xl w-full"
+                  onClick={addFovorite}
+                >
+                  favorite
+                </button>
+              </div>
+            ) : (
+              <>
+                <span className="flex justify-center items-center space-x-4">
+                  <button className="bg-red-500 relative p-4 cursor-pointer rounded-full text-white" onClick={() => handleDecrease(productDetails?.startPrice)}>
+                    <AiOutlineMinus className=' font-bold absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2' size={20} />
+                  </button>
+                  <span className="text-red-500 px-8 py-2 bg-slate-50 text-lg font-medium">
+                    ${amount || productDetails?.startPrice}
+                  </span>
+                  <button className="bg-red-500 relative p-4 cursor-pointer rounded-full text-white" onClick={() => handleIncrease(productDetails?.startPrice)} >
+                    <AiOutlinePlus className=' font-bold absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2' size={20} />
+                  </button>
+                </span>
+                <form
+                  className="border-b-2 border-gray-100 pb-4"
+                  onSubmit={handleOnBids}
+                >
+                  {/* <label
                   htmlFor="offer"
                   type="button"
                   className="py-2 text-center cursor-pointer px-4 mt-4 rounded bg-red-500 text-white font-medium !w-full"
                 >
                   offer
                 </label> */}
-                    <input
-                      type="text"
-                      name="amount"
-                      className="input active:outline-none input-bordered bg-transparent w-full"
-                    />
 
-                    <button
-                      type="submit"
-                      className="py-3 text-xl active:scale-90 transition duration-150 transform shadow-md  text-center cursor-pointer px-4 mt-4 rounded bg-red-500 text-white font-medium !w-full"
-                    >
-                      offer
-                    </button>
-                  </form>
+
                   <button
-                    className="py-3 px-4 mt-4 active:scale-90 transition duration-150 transform rounded border border-red-500 font-medium text-xl w-full"
-                    onClick={addFovorite}
+                    type="submit"
+                    className="py-3 text-xl active:scale-90 transition duration-150 transform shadow-md  text-center cursor-pointer px-4 mt-4 rounded bg-red-500 text-white font-medium !w-full"
                   >
-                    favorite
+                    offer
                   </button>
-                </>
-              )}
-            </>
-          )}
+                </form>
+                <button
+                  className="py-3 px-4 mt-4 active:scale-90 transition duration-150 transform rounded border border-red-500 font-medium text-xl w-full"
+                  onClick={addFovorite}
+                >
+                  favorite
+                </button>
+              </>
+            )) : (
+              <>
+                <form
+                  className="border-b-2 border-gray-100 pb-4"
+                  onSubmit={handleOnBids}
+                >
+                  <span className="flex justify-center items-center space-x-4">
+                    <button className="bg-red-500 relative p-4 cursor-pointer rounded-full text-white" onChange={() => handleDecrease(productDetails?.startPrice)}>
+                      <AiOutlineMinus className=' font-bold absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2' size={20} />
+                    </button>
+                    <span className="text-red-500 px-8 py-2 bg-slate-50 text-lg font-medium">
+                      ${amount || productDetails?.startPrice}
+                    </span>
+                    <button className="bg-red-500 relative p-4 cursor-pointer rounded-full text-white" onChange={() => handleIncrease(productDetails?.startPrice)} >
+                      <AiOutlinePlus className=' font-bold absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2' size={20} />
+                    </button>
+                  </span>
+
+                  <button
+                    type="submit"
+                    className="py-3 text-xl active:scale-90 transition duration-150 transform shadow-md  text-center cursor-pointer px-4 mt-4 rounded bg-red-500 text-white font-medium !w-full"
+                  >
+                    offer
+                  </button>
+                </form>
+                <button
+                  className="py-3 px-4 mt-4 active:scale-90 transition duration-150 transform rounded border border-red-500 font-medium text-xl w-full"
+                  onClick={addFovorite}
+                >
+                  favorite
+                </button>
+              </>
+            ))
+
+          }
+
         </div>
       </div>
       <div className="bg-gray-50/[.04] border rounded p-5 mb-10">

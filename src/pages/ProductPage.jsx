@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useProductContext } from '../context/productContext';
 import axios from 'axios';
 import Product from '../component/Product';
-
+import { motion, AnimatePresence } from "framer-motion";
 const ProductPage = ({ value, setValue, active, setActive }) => {
 
     const { product, setProduct } = useProductContext();
@@ -65,16 +65,27 @@ const ProductPage = ({ value, setValue, active, setActive }) => {
     }, [value]);
     return (
         <div className='pt-[15vh]'>
+
             <div className="container py-8 mx-auto">
                 <div className=" p-5 mb-14">
                     <div className="flex flex-wrap justify-center mb-8 gap-5">
                         {catagory?.map((btn) => (
-                            <button className={active === btn.id ? "text-xl px-4 py-3 text-white bg-black border-black border-2 rounded-sm  justify-center" : "text-xl px-4 py-3 text-black border-black border-2 rounded-sm  justify-center"} onClick={() => handleButton(btn)}>{btn.name}</button>
+                            <motion.button whileHover={{ scale: 1.07 }}
+                                whileTap={{ scale: 0.9 }} transition={{ duration: 0.2 }} className={active === btn.id ? "text-xl px-4 py-3 text-white bg-black border-black border-2 rounded-sm  justify-center" : "text-xl px-4 py-3 text-black border-black border-2 rounded-sm  justify-center"} onClick={() => handleButton(btn)}>{btn.name}</motion.button>
                         ))}
                     </div>
                     <div className="grid 2xl:grid-cols-6 xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1  gap-4 ">
                         {product?.map((curElem) => (
-                            <Product curElem={curElem} />
+                            <AnimatePresence mode="wait">
+                                <motion.div
+                                    initial={{ y: 10, opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    exit={{ y: -10, opacity: 0 }}
+                                    transition={{ duration: 0.2 }}
+                                >
+                                    <Product curElem={curElem} />
+                                </motion.div>
+                            </AnimatePresence>
                         ))}
                     </div>
                 </div>
