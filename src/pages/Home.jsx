@@ -8,16 +8,19 @@ import Hero from "../component/Hero";
 import BannerReverse from "../component/BannerReverse";
 import Banner from "../component/Banner";
 import Product from "../component/Product";
+import { InfinitySpin } from "react-loader-spinner";
 const Home = ({ value, setValue, active, setActive }) => {
 
   const [newProduct, setNewProduct] = useState([])
   const [endProduct, setEndProduct] = useState([])
   const [mostBidProduct, setMostBidProduct] = useState([])
+  const [loading, setLoading] = useState(true)
   const getNewProducts = async () => {
     try {
       const res = await axios.get("     https://infinity-site.onrender.com/api/v1/product/products/new");
 
       if (res.data.success) {
+        setLoading(false)
         setNewProduct(res.data.data.products);
       }
     } catch (error) {
@@ -29,23 +32,28 @@ const Home = ({ value, setValue, active, setActive }) => {
       const res = await axios.get("     https://infinity-site.onrender.com/api/v1/product/products/ending-soon");
 
       if (res.data.success) {
+        setLoading(false)
         setEndProduct(res.data.data.products);
       }
     } catch (error) {
       console.log(error);
     }
   };
+
   const getmostBidsProducts = async () => {
     try {
       const res = await axios.get("     https://infinity-site.onrender.com/api/v1/product/products/most-bids");
 
       if (res.data.success) {
+        setLoading(false)
         setMostBidProduct(res.data.data.products);
+
       }
     } catch (error) {
       console.log(error);
     }
   };
+
 
   useEffect(() => {
     getNewProducts();
@@ -59,11 +67,24 @@ const Home = ({ value, setValue, active, setActive }) => {
       <div className="container py-8 mx-auto">
         <div className="bg-gray-100 p-5 mb-14">
           <div className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-bold text-black py-6">Most bidding products</div>
-          <div className="grid 2xl:grid-cols-6 xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1  gap-4 ">
-            {mostBidProduct?.map((curElem) => (
-              <Product curElem={curElem} />
-            ))}
-          </div>
+          {
+            loading ? (<div className="text-center mx-auto w-32">
+
+              < InfinitySpin
+                visible={true}
+                width="200"
+                className="text-center mx-auto"
+                color="red"
+                ariaLabel="infinity-spin-loading"
+              />
+
+            </div>) : (<div className="grid 2xl:grid-cols-6 xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1  gap-4 ">
+              {mostBidProduct?.map((curElem) => (
+                <Product curElem={curElem} />
+              ))}
+            </div>)
+          }
+
         </div>
         <div className="bg-gray-100 p-5 mb-14">
           <div className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-bold text-black py-6">Product That closing soon</div>
