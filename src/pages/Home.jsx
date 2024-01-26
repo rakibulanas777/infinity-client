@@ -88,11 +88,26 @@ const Home = ({ value, setValue, active, setActive }) => {
         </div>
         <div className="bg-gray-100 p-5 mb-14">
           <div className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-bold text-black py-6">Product That closing soon</div>
-          <div className="grid 2xl:grid-cols-6 xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1  gap-4 ">
-            {endProduct?.map((curElem) => (
-              <Product curElem={curElem} />
-            ))}
-          </div>
+
+          {
+            loading ? (<div className="text-center mx-auto w-32">
+
+              < InfinitySpin
+                visible={true}
+                width="200"
+                className="text-center mx-auto"
+                color="red"
+                ariaLabel="infinity-spin-loading"
+              />
+
+            </div>) : (<div className="grid 2xl:grid-cols-6 xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1  gap-4 ">
+              {endProduct?.map((curElem) => (
+                <Product curElem={curElem} />
+              ))}
+            </div>)
+          }
+
+
         </div>
         <Banner
           title="Creative harmonious living"
@@ -101,11 +116,24 @@ const Home = ({ value, setValue, active, setActive }) => {
         />
         <div className="bg-gray-100 p-5 mb-14">
           <div className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-bold text-black py-6">New arrivals products</div>
-          <div className="grid 2xl:grid-cols-6 xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3 grid-cols-1 sm:grid-cols-2 gap-4 ">
-            {newProduct?.map((curElem) => (
-              <Product curElem={curElem} />
-            ))}
-          </div>
+          {
+            loading ? (<div className="text-center mx-auto w-32">
+
+              < InfinitySpin
+                visible={true}
+                width="200"
+                className="text-center mx-auto"
+                color="red"
+                ariaLabel="infinity-spin-loading"
+              />
+
+            </div>) : (<div className="grid 2xl:grid-cols-6 xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3 grid-cols-1 sm:grid-cols-2 gap-4 ">
+              {newProduct?.map((curElem) => (
+                <Product curElem={curElem} />
+              ))}
+            </div>)
+          }
+
         </div>
         <BannerReverse
           title="Comfortable & Elegante Living"
